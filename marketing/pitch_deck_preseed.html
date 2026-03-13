@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RentGuard — Pre-Seed Investor Deck</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #f5f5f7;
+        }
+
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            padding: 64px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media print {
+            .slide {
+                page-break-after: always;
+                min-height: 100vh;
+                padding: 48px 60px;
+            }
+        }
+
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+        }
+
+        .glow-blue {
+            background: rgba(0, 113, 227, 0.15);
+            width: 600px;
+            height: 400px;
+            top: -100px;
+            right: -100px;
+        }
+
+        .glow-blue2 {
+            background: rgba(0, 113, 227, 0.1);
+            width: 400px;
+            height: 300px;
+            bottom: -50px;
+            left: -50px;
+        }
+
+        /* Slide number */
+        .slide-num {
+            position: absolute;
+            top: 28px;
+            right: 36px;
+            font-size: 11px;
+            color: #444;
+            letter-spacing: 1px;
+        }
+
+        .slide-tag {
+            position: absolute;
+            top: 28px;
+            left: 36px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #2997ff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 48px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon span {
+            font-weight: 900;
+            color: #000;
+            font-size: 16px;
+        }
+
+        .logo-name {
+            font-weight: 700;
+            font-size: 18px;
+            color: #fff;
+        }
+
+        /* Title slide */
+        .title-slide {
+            background: linear-gradient(135deg, #050810 0%, #000 100%);
+        }
+
+        .title-slide h1 {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            margin-bottom: 24px;
+        }
+
+        .title-slide h1 em {
+            font-style: normal;
+            color: #2997ff;
+        }
+
+        .title-slide .subtitle {
+            font-size: 20px;
+            color: #86868b;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        .title-slide .meta {
+            display: flex;
+            gap: 32px;
+        }
+
+        .meta-item .label {
+            font-size: 10px;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .meta-item .val {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* Section header */
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            color: #2997ff;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        h2 em {
+            font-style: normal;
+            color: #2997ff;
+        }
+
+        .body-text {
+            font-size: 16px;
+            color: #86868b;
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        /* Stats grid */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 36px 0;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+        }
+
+        .stat-n {
+            font-size: 42px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .stat-l {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* 2-col */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+            margin-top: 36px;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .feature-list .icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(0, 113, 227, 0.15);
+            border: 1px solid rgba(0, 113, 227, 0.3);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .feature-list li div h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .feature-list li div p {
+            font-size: 12px;
+            color: #66686b;
+            line-height: 1.5;
+        }
+
+        /* Market table */
+        .market-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 28px;
+        }
+
+        .market-table th {
+            text-align: left;
+            font-size: 10px;
+            font-weight: 700;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .market-table td {
+            font-size: 13px;
+            padding: 14px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #ccc;
+        }
+
+        .market-table td:first-child {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .market-table td.highlight {
+            color: #2997ff;
+            font-weight: 700;
+        }
+
+        /* Roadmap */
+        .roadmap {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .phase {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+            padding: 22px;
+        }
+
+        .phase .ph-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #2997ff;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .phase h3 {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .phase ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .phase ul li {
+            font-size: 11px;
+            color: #777;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .phase ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #444;
+        }
+
+        /* Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            background: rgba(0, 113, 227, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 18px;
+            font-weight: 900;
+            color: #2997ff;
+        }
+
+        .team-card h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .team-card .role {
+            font-size: 11px;
+            color: #2997ff;
+            margin-bottom: 8px;
+        }
+
+        .team-card p {
+            font-size: 11px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Ask box */
+        .ask-box {
+            background: linear-gradient(135deg, rgba(0, 113, 227, 0.15), rgba(0, 113, 227, 0.05));
+            border: 1px solid rgba(0, 113, 227, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .ask-box h3 {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+
+        .ask-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .ask-item .ask-val {
+            font-size: 28px;
+            font-weight: 900;
+            color: #2997ff;
+            margin-bottom: 6px;
+        }
+
+        .ask-item .ask-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* CTA slide */
+        .cta-slide {
+            text-align: center;
+            align-items: center;
+        }
+
+        .cta-slide h2 {
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
+
+        .cta-slide p {
+            font-size: 16px;
+            color: #86868b;
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #0071e3;
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 16px 40px;
+            border-radius: 100px;
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+            margin: 32px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SLIDE 1: Title -->
+    <div class="slide title-slide">
+        <div class="glow glow-blue"></div>
+        <div class="slide-num">1 / 10</div>
+        <div class="logo">
+            <div class="logo-icon"><span>R</span></div>
+            <span class="logo-name">RentGuard</span>
+        </div>
+        <h1>Collect Rent.<br><em>No Matter What.</em></h1>
+        <p class="subtitle">The institutional-grade rent guarantee platform for residential landlords, backed by AI
+            underwriting and full legal management.</p>
+        <div class="meta">
+            <div class="meta-item">
+                <div class="label">Round</div>
+                <div class="val">Pre-Seed</div>
+            </div>
+            <div class="meta-item">
+                <div class="label">Stage</div>
+                <div class="val">MVP Live</div>
+            </div>
+            <div class="meta-item">
+                <div class="label">Market</div>
+                <div class="val">Florida, USA</div>
+            </div>
+            <div class="meta-item">
+                <div class="label">Date</div>
+                <div class="val">2026</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: Problem -->
+    <div class="slide">
+        <div class="glow glow-blue2"></div>
+        <div class="slide-num">2 / 10</div>
+        <div class="slide-tag">The Problem</div>
+        <div class="eyebrow">The Problem</div>
+        <h2>Landlords Risk<br>Everything.<br><em>Every. Lease.</em></h2>
+        <p class="body-text">Every residential lease is an unsecured credit risk. When a tenant defaults, the landlord
+            absorbs months of unpaid rent, thousands in legal costs, and endless stress — with no safety net and zero
+            recourse.</p>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-n">3.4%</div>
+                <div class="stat-l">Annual US residential tenant default rate</div>
+            </div>
+            <div class="stat">
+                <div class="stat-n">$9,000+</div>
+                <div class="stat-l">Average eviction cost per default event</div>
+            </div>
+            <div class="stat">
+                <div class="stat-n">4–6 mo</div>
+                <div class="stat-l">Average eviction timeline in Florida</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: Solution -->
+    <div class="slide">
+        <div class="slide-num">3 / 10</div>
+        <div class="slide-tag">The Solution</div>
+        <div class="eyebrow">Our Solution</div>
+        <h2>RentGuard:<br>The Rent<br><em>Guarantee Layer.</em></h2>
+        <div class="two-col">
+            <div>
+                <p class="body-text">RentGuard is a B2B2C platform providing rent default guarantees to residential
+                    property owners. We underwrite tenants before lease signing, and if they default, we pay — rent +
+                    lawyers + courts — until the property is recovered.</p>
+            </div>
+            <ul class="feature-list">
+                <li>
+                    <div class="icon">💰</div>
+                    <div>
+                        <h3>Unpaid Rent, Fully Covered</h3>
+                        <p>We pay every dollar of rent owed during the eviction process. No caps, no deductibles.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="icon">⚡</div>
+                    <div>
+                        <h3>48-Hour AI Underwriting</h3>
+                        <p>Instant decisions in most cases. Powered by credit data, income verification, and proprietary
+                            rules.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="icon">⚖️</div>
+                    <div>
+                        <h3>End-to-End Legal Management</h3>
+                        <p>We manage the eviction from initial notice to property recovery. Attorney fees included.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: Business Model -->
+    <div class="slide">
+        <div class="slide-num">4 / 10</div>
+        <div class="slide-tag">Business Model</div>
+        <div class="eyebrow">How We Make Money</div>
+        <h2>Simple, Scalable<br><em>Premium Model.</em></h2>
+        <div class="two-col">
+            <div>
+                <p class="body-text">Landlords or tenants pay an annual premium of 4%–10% of annual gross rent for 12
+                    months of full coverage. Pricing adjusts based on tenant creditworthiness and market risk
+                    parameters.</p>
+                <div class="divider"></div>
+                <p style="font-size:14px;color:#86868b;">On a $2,000/mo rental at 5% → <strong
+                        style="color:#fff;">$1,200/year</strong> per policy. At 1,000 active policies → <strong
+                        style="color:#2997ff;">$1.2M ARR</strong>.</p>
+            </div>
+            <ul class="feature-list">
+                <li>
+                    <div class="icon">🏠</div>
+                    <div>
+                        <h3>B2B2C via Brokers</h3>
+                        <p>Real estate agents earn a referral fee, making them active distribution partners.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="icon">🏢</div>
+                    <div>
+                        <h3>B2B Direct</h3>
+                        <p>Multi-family operators and REITs sign portfolio agreements with volume pricing.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="icon">👤</div>
+                    <div>
+                        <h3>B2C Direct</h3>
+                        <p>Individual landlords apply online. Lowest CAC via SEO and word-of-mouth.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: Market Opportunity -->
+    <div class="slide">
+        <div class="slide-num">5 / 10</div>
+        <div class="slide-tag">Market</div>
+        <div class="eyebrow">Market Opportunity</div>
+        <h2>A $50B+ Market<br><em>Waiting to Be Protected.</em></h2>
+        <table class="market-table">
+            <thead>
+                <tr>
+                    <th>Market</th>
+                    <th>Rental Units</th>
+                    <th>Avg Annual Rent</th>
+                    <th>Penetration (1%)</th>
+                    <th>Rev at 5% Premium</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Florida (MVP)</td>
+                    <td>2.1M</td>
+                    <td>$18,000</td>
+                    <td>21,000 policies</td>
+                    <td class="highlight">$18.9M</td>
+                </tr>
+                <tr>
+                    <td>California</td>
+                    <td>5.8M</td>
+                    <td>$24,000</td>
+                    <td>58,000 policies</td>
+                    <td class="highlight">$69.6M</td>
+                </tr>
+                <tr>
+                    <td>Texas</td>
+                    <td>3.9M</td>
+                    <td>$16,800</td>
+                    <td>39,000 policies</td>
+                    <td class="highlight">$32.8M</td>
+                </tr>
+                <tr>
+                    <td>National (US)</td>
+                    <td>48M</td>
+                    <td>$19,200</td>
+                    <td>480,000 policies</td>
+                    <td class="highlight">$460M+</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top:16px;font-size:11px;color:#444;">Source: US Census Bureau, National Multifamily Housing
+            Council 2024 estimates</p>
+    </div>
+
+    <!-- SLIDE 6: Go-To-Market -->
+    <div class="slide">
+        <div class="slide-num">6 / 10</div>
+        <div class="slide-tag">Go-To-Market</div>
+        <div class="eyebrow">Distribution Strategy</div>
+        <h2>Brokers Are Our<br><em>Sales Force.</em></h2>
+        <div class="two-col">
+            <p class="body-text">Florida has 200,000+ licensed real estate agents. Each agent who closes rental deals
+                becomes a RentGuard referral partner. Our agent-facing portal, commission structure, and brand make us
+                the default choice for rent protection.</p>
+            <ul class="feature-list">
+                <li>
+                    <div class="icon">🎯</div>
+                    <div>
+                        <h3>Phase 1: South Florida</h3>
+                        <p>Miami, Fort Lauderdale, Naples, Orlando. Target 500 active broker partners in Year 1.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="icon">📈</div>
+                    <div>
+                        <h3>Phase 2: Statewide</h3>
+                        <p>Full Florida coverage by Month 12. Leverage broker network for rapid geographic expansion.
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="icon">🌎</div>
+                    <div>
+                        <h3>Phase 3: National</h3>
+                        <p>California, Texas, NY. License model or strategic partnerships with national brokerages.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Competitive Advantage -->
+    <div class="slide">
+        <div class="slide-num">7 / 10</div>
+        <div class="slide-tag">Competition</div>
+        <div class="eyebrow">Why We Win</div>
+        <h2>Everyone Else<br>Is Either <em>Too Slow</em><br>or Too Expensive.</h2>
+        <div class="stats" style="margin-top:32px;">
+            <div class="stat">
+                <div class="stat-n" style="font-size:28px;color:#2997ff;">48 hrs</div>
+                <div class="stat-l">Our underwriting SLA vs. weeks for traditional insurance</div>
+            </div>
+            <div class="stat">
+                <div class="stat-n" style="font-size:28px;color:#2997ff;">100%</div>
+                <div class="stat-l">Digital application — no broker involvement required</div>
+            </div>
+            <div class="stat">
+                <div class="stat-n" style="font-size:28px;color:#2997ff;">1:1</div>
+                <div class="stat-l">Personal account executive — no call center, no automated support</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: Roadmap -->
+    <div class="slide">
+        <div class="slide-num">8 / 10</div>
+        <div class="slide-tag">Roadmap</div>
+        <div class="eyebrow">Product Roadmap</div>
+        <h2>From MVP<br>to <em>National Platform.</em></h2>
+        <div class="roadmap">
+            <div class="phase">
+                <div class="ph-label">Now — Q2 2026</div>
+                <h3>MVP Launch</h3>
+                <ul>
+                    <li>Web App Live (Florida)</li>
+                    <li>Underwriting Engine</li>
+                    <li>Broker Partner Program</li>
+                    <li>First 100 Policies</li>
+                </ul>
+            </div>
+            <div class="phase">
+                <div class="ph-label">Q3–Q4 2026</div>
+                <h3>Scale</h3>
+                <ul>
+                    <li>Statewide Florida</li>
+                    <li>500+ Broker Referrals</li>
+                    <li>Portfolio Dashboard</li>
+                    <li>API for Property Mgmt SW</li>
+                </ul>
+            </div>
+            <div class="phase">
+                <div class="ph-label">2027</div>
+                <h3>National</h3>
+                <ul>
+                    <li>California Launch</li>
+                    <li>Texas Launch</li>
+                    <li>Series A Fundraise</li>
+                    <li>10,000+ Active Policies</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: The Ask -->
+    <div class="slide">
+        <div class="slide-num">9 / 10</div>
+        <div class="slide-tag">The Ask</div>
+        <div class="eyebrow">Investment Opportunity</div>
+        <h2>Pre-Seed Round:<br>Building the<br><em>Foundation to Scale.</em></h2>
+        <p class="body-text">We are raising our pre-seed round to fund 18 months of product development, distribution,
+            and the initial capital required to back our first 500 policies.</p>
+        <div class="ask-box">
+            <h3>Use of Funds</h3>
+            <div class="ask-grid">
+                <div class="ask-item">
+                    <div class="ask-val">40%</div>
+                    <div class="ask-desc">Technology & Product<br>(Engineering, AI/ML, Infrastructure)</div>
+                </div>
+                <div class="ask-item">
+                    <div class="ask-val">35%</div>
+                    <div class="ask-desc">Sales & Marketing<br>(Broker partnerships, growth)</div>
+                </div>
+                <div class="ask-item">
+                    <div class="ask-val">25%</div>
+                    <div class="ask-desc">Operations & Reserve<br>(Legal, compliance, team)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: CTA -->
+    <div class="slide cta-slide title-slide">
+        <div class="glow glow-blue"></div>
+        <div class="slide-num">10 / 10</div>
+        <div class="logo">
+            <div class="logo-icon"><span>R</span></div>
+            <span class="logo-name">RentGuard</span>
+        </div>
+        <h2>Let's Build the<br><em>Future of Rent.</em></h2>
+        <p>We'd love to walk you through our model, unit economics, and vision. Book 30 minutes with our founding team.
+        </p>
+        <span class="cta-button">Book a Call → rentguard.com/investors</span>
+        <div style="margin-top:40px;font-size:11px;color:#444;text-align:center;">Confidential — For Accredited
+            Investors Only · RentGuard Inc. · 2026</div>
+    </div>
+
+</body>
+
+</html>

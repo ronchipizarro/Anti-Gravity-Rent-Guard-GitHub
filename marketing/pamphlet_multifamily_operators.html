@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RentGuard — For Multi-Family Operators</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:#000; color:#f5f5f7; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .page { width:210mm; min-height:297mm; margin:0 auto; background:#000; }
+  @media print { .page { margin:0; width:100%; } }
+
+  .top-bar {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-bottom: 2px solid #0071e3;
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo { display:flex; align-items:center; gap:10px; }
+  .logo-icon { width:30px; height:30px; background:#fff; border-radius:8px; display:flex; align-items:center; justify-content:center; }
+  .logo-icon span { font-weight:900; color:#000; font-size:14px; }
+  .logo-name { font-weight:700; font-size:16px; color:#fff; }
+  .top-tag { font-size:10px; font-weight:700; color:#2997ff; letter-spacing:1.5px; text-transform:uppercase; }
+
+  .hero {
+    padding:44px 32px 36px;
+    background:linear-gradient(180deg,#050810 0%,#000 100%);
+    border-bottom:1px solid rgba(255,255,255,0.05);
+    position:relative;
+  }
+  .hero::after {
+    content:''; position:absolute; top:0; right:0;
+    width:250px; height:200px;
+    background:radial-gradient(ellipse at top right, rgba(0,113,227,0.15) 0%, transparent 70%);
+  }
+  .eyebrow { font-size:10px; font-weight:700; letter-spacing:2px; color:#2997ff; text-transform:uppercase; margin-bottom:14px; }
+  .hero h1 { font-size:36px; font-weight:900; line-height:1.1; letter-spacing:-1px; margin-bottom:16px; }
+  .hero h1 em { font-style:normal; color:#2997ff; }
+  .hero-sub { font-size:13.5px; color:#86868b; line-height:1.7; max-width:480px; }
+
+  .section { padding:28px 32px 0; }
+  .section-label { font-size:10px; font-weight:700; letter-spacing:2px; color:#2997ff; text-transform:uppercase; margin-bottom:18px; }
+
+  /* Portfolio stats */
+  .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:28px; }
+  .stat-box {
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:14px;
+    padding:20px 16px;
+    text-align:center;
+  }
+  .stat-num { font-size:26px; font-weight:900; color:#fff; margin-bottom:4px; }
+  .stat-label { font-size:10px; color:#86868b; line-height:1.4; }
+
+  /* Value props */
+  .cards { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:28px; }
+  .card {
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:14px;
+    padding:20px;
+  }
+  .card-icon { font-size:20px; margin-bottom:10px; }
+  .card h3 { font-size:13px; font-weight:700; margin-bottom:6px; }
+  .card p { font-size:11px; color:#86868b; line-height:1.6; }
+
+  /* ROI Box */
+  .roi-box {
+    background:linear-gradient(135deg,rgba(0,113,227,0.12),rgba(0,113,227,0.04));
+    border:1px solid rgba(0,113,227,0.3);
+    border-radius:16px;
+    padding:24px 28px;
+    margin:0 32px 28px;
+  }
+  .roi-box h2 { font-size:18px; font-weight:900; margin-bottom:10px; }
+  .roi-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:16px; }
+  .roi-item { text-align:center; }
+  .roi-item .val { font-size:22px; font-weight:900; color:#2997ff; }
+  .roi-item .desc { font-size:10px; color:#86868b; margin-top:4px; line-height:1.4; }
+
+  /* Features list */
+  .features { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:28px; padding:0 32px; }
+  .feature {
+    display:flex; align-items:flex-start; gap:10px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:10px;
+    padding:12px 14px;
+    font-size:11px;
+  }
+  .feature-check { color:#30d158; font-weight:700; flex-shrink:0; }
+
+  .divider { height:1px; background:rgba(255,255,255,0.06); margin:0 32px 24px; }
+
+  .footer {
+    background:rgba(255,255,255,0.02);
+    border-top:1px solid rgba(255,255,255,0.06);
+    padding:16px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+    margin-top:auto;
+  }
+  .footer p { font-size:10px; color:#444; }
+  .footer-cta { font-size:11px; font-weight:600; color:#2997ff; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="top-bar">
+    <div class="logo">
+      <div class="logo-icon"><span>R</span></div>
+      <span class="logo-name">RentGuard</span>
+    </div>
+    <span class="top-tag">For Multi-Family Operators &amp; Portfolio Owners</span>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">Institutional Portfolio Protection</div>
+    <h1>Guarantee Every Dollar<br>of Rent Across<br><em>Your Entire Portfolio.</em></h1>
+    <p class="hero-sub">RentGuard gives multi-family operators, REITs, and residential portfolio owners institutional-grade rent default protection — so tenant turnover never disrupts your cash flow or your investors.</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="section" style="padding-top:26px;">
+    <div class="section-label">The Risk You're Carrying Without RentGuard</div>
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">3.4%</div>
+        <div class="stat-label">Avg. US tenant default rate</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">$9K+</div>
+        <div class="stat-label">Avg. eviction cost per unit</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">4–6mo</div>
+        <div class="stat-label">Avg. eviction timeline in FL</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">$0</div>
+        <div class="stat-label">Your out-of-pocket with RentGuard</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Value Props -->
+  <div class="section">
+    <div class="section-label">Built for Portfolio Scale</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🏢</div>
+        <h3>Volume Pricing</h3>
+        <p>Custom pricing tiers for portfolios with multiple units. The more you protect, the better the rate.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Bulk Tenant Screening</h3>
+        <p>Submit multiple tenants at once. Our AI engine processes them simultaneously with 48-hour SLA.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>Portfolio Dashboard</h3>
+        <p>Real-time visibility into coverage status, active claims, and underwriting results across all your units.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤝</div>
+        <h3>Dedicated Account Executive</h3>
+        <p>Direct access to your RentGuard rep — not a call center. Your exec knows your portfolio by name.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROI Box -->
+  <div class="roi-box">
+    <h2>The RentGuard ROI for a 50-Unit Portfolio</h2>
+    <p style="font-size:11px;color:#86868b;line-height:1.6;">At a 3.4% default rate, 1–2 defaults per year are expected. One single default costs more than an entire year of RentGuard coverage for the whole portfolio.</p>
+    <div class="roi-grid">
+      <div class="roi-item">
+        <div class="val">~$3,600</div>
+        <div class="desc">Avg. annual RentGuard<br>premium per unit at 4%</div>
+      </div>
+      <div class="roi-item">
+        <div class="val">$0</div>
+        <div class="desc">Legal costs &amp; unpaid rent<br>you absorb if default</div>
+      </div>
+      <div class="roi-item">
+        <div class="val">100%</div>
+        <div class="desc">Rent collected during<br>the full eviction process</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="section">
+    <div class="section-label">Everything Included</div>
+  </div>
+  <div class="features">
+    <div class="feature"><span class="feature-check">✓</span> 100% unpaid rent covered during eviction</div>
+    <div class="feature"><span class="feature-check">✓</span> Attorney fees &amp; all court costs covered</div>
+    <div class="feature"><span class="feature-check">✓</span> AI-powered institutional tenant screening</div>
+    <div class="feature"><span class="feature-check">✓</span> 48-hour underwriting SLA</div>
+    <div class="feature"><span class="feature-check">✓</span> Full eviction management by RentGuard team</div>
+    <div class="feature"><span class="feature-check">✓</span> No deductibles, no monthly caps</div>
+    <div class="feature"><span class="feature-check">✓</span> Soft credit inquiry — no tenant score impact</div>
+    <div class="feature"><span class="feature-check">✓</span> Investor-ready reporting on demand</div>
+  </div>
+
+  <div class="footer">
+    <p>RentGuard is not an insurance product. Coverage subject to underwriting approval and agreement terms. Florida only (MVP).</p>
+    <span class="footer-cta">rentguard.com | Request Enterprise Demo →</span>
+  </div>
+
+</div>
+</body>
+</html>

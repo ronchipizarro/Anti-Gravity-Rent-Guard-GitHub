@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RentGuard Mobile Flyer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2997ff;
+      --accent: #30d158;
+      --bg: #000;
+      --card: #111;
+      --text: #fff;
+      --muted: #a1a1a6;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      width: 100vw;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .header { text-align: center; margin-bottom: 40px; }
+    .logo-box { background: #fff; color: #000; padding: 10px 20px; border-radius: 12px; font-weight: 900; font-size: 24px; display: inline-block; margin-bottom: 15px; }
+    
+    h1 { font-size: 48px; font-weight: 900; letter-spacing: -2px; line-height: 1.1; margin-bottom: 20px; text-align: center; }
+    h1 span { color: var(--primary); }
+
+    .promo-card {
+      background: linear-gradient(135deg, rgba(48, 209, 88, 0.2) 0%, rgba(48, 209, 88, 0.05) 100%);
+      border: 3px solid var(--accent);
+      border-radius: 30px;
+      padding: 40px 20px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .promo-label { font-size: 16px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+    .promo-val { font-size: 90px; font-weight: 900; line-height: 1; margin-bottom: 10px; }
+    .promo-sub { font-size: 20px; font-weight: 600; color: var(--muted); }
+
+    .tiers {
+      width: 100%;
+      background: var(--card);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    .tier-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #222; font-size: 18px; }
+    .tier-row:last-child { border: none; }
+    .tier-name { font-weight: 600; }
+    .tier-val { color: var(--primary); font-weight: 900; }
+
+    .payout-box {
+      background: #1a1a1a;
+      border-radius: 20px;
+      padding: 30px;
+      width: 100%;
+      margin-bottom: 30px;
+      border-left: 6px solid var(--primary);
+    }
+    .payout-box h3 { font-size: 24px; margin-bottom: 8px; color: var(--primary); }
+    .payout-box p { font-size: 18px; color: var(--muted); line-height: 1.4; }
+
+    .steps { width: 100%; display: grid; gap: 15px; margin-bottom: 40px; }
+    .step { background: #0a0a0a; border: 1px solid #222; border-radius: 20px; padding: 25px; display: flex; align-items: center; gap: 20px; }
+    .step-num { font-size: 32px; font-weight: 900; color: rgba(255,255,255,0.1); }
+    .step-text h4 { font-size: 20px; color: var(--text); }
+    .step-text p { font-size: 15px; color: var(--muted); }
+
+    .cta { background: var(--primary); color: #fff; width: 100%; padding: 25px; border-radius: 20px; text-align: center; font-size: 22px; font-weight: 900; text-decoration: none; }
+    .small-legal { font-size: 12px; color: #444; text-align: center; margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo-box">RentGuard</div>
+  </div>
+
+  <h1>Stop Losing Deals.<br>Start Earning <span>Overrides.</span></h1>
+
+  <div class="promo-card">
+    <div class="promo-label">Limited Offer</div>
+    <div class="promo-val">20%</div>
+    <div class="promo-sub">Referral fee for your first 3 deals</div>
+  </div>
+
+  <div class="tiers">
+    <div class="tier-row">
+      <span class="tier-name">Base Rate</span>
+      <span class="tier-val">8%</span>
+    </div>
+    <div class="tier-row">
+      <span class="tier-name">2 Deals/mo</span>
+      <span class="tier-val">10%</span>
+    </div>
+    <div class="tier-row">
+      <span class="tier-name">3+ Deals/mo</span>
+      <span class="tier-val">12%</span>
+    </div>
+  </div>
+
+  <div class="payout-box">
+    <h3>💸 48-Hour Payouts</h3>
+    <p>Get paid via <strong>Stripe</strong> or <strong>Wise</strong> in as little as 48 hours after lease signing.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-text">
+        <h4>Input the Deal</h4>
+        <p>Takes < 60 seconds online.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-text">
+        <h4>Instant Approval</h4>
+        <p>AI Underwriting in 48 hours.</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="#" class="cta">Activate Broker Portal →</a>
+
+  <div class="small-legal">
+    Authorized for Florida operations. Coverage subject to terms.
+  </div>
+</body>
+</html>
