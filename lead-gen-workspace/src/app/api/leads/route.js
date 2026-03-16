@@ -1,37 +1,31 @@
-import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
+import { NextResponse } from 'next/server';
 
-export async function GET(request) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const campaignId = searchParams.get('campaignId');
-    const status = searchParams.get('status');
-    const city = searchParams.get('city');
+export async function GET(req) {
+  const db = getDb();
+  const { searchParams } = new URL(req.url);
+  const city = searchParams.get('city');
+  const status = searchParams.get('status');
+  const campaignId = searchParams.get('campaignId');
 
-    const db = getDb();
-    
-    let query = 'SELECT leads.*, campaigns.name as campaign_name FROM leads LEFT JOIN campaigns ON leads.campaign_id = campaigns.id WHERE 1=1';
-    const params = [];
+  let query = 'SELECT leads.*, campaigns.name as campaign_name FROM leads LEFT JOIN campaigns ON leads.campaign_id = campaigns.id WHERE 1=1';
+  let params = [];
 
-    if (campaignId) {
-      query += ' AND campaign_id = ?';
-      params.push(campaignId);
-    }
-    if (status) {
-      query += ' AND pipeline_status = ?';
-      params.push(status);
-    }
-    if (city) {
-      query += ' AND city LIKE ?';
-      params.push(`%${city}%`);
-    }
-
-    query += ' ORDER BY leads.created_at DESC';
-
-    const leads = db.prepare(query).all(...params);
-
-    return NextResponse.json({ success: true, count: leads.length, leads });
-  } catch (error) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  if (city) {
+    query += ' AND leads.city LIKE ?';
+    params.push(`%${city}%`);
   }
+  if (status) {
+    query += ' AND leads.pipeline_status = ?';
+    params.push(status);
+  }
+  if (campaignId) {
+    query += ' AND leads.campaign_id = ?';
+    params.push(campaignId);
+  }
+
+  query += ' ORDER BY leads.created_at DESC LIMIT 500';
+  const leads = db.prepare(query).all(...params);
+  
+  return NextResponse.json({ success: true, leads });
 }

@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'
+
 export default function Footer() {
     return (
         <footer className="border-t border-white/8 bg-black">
@@ -41,8 +43,8 @@ export default function Footer() {
                         <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">Apply</p>
                         <ul className="space-y-3">
                             {[
-                                { label: 'Owner Application', href: '/apply/owner' },
-                                { label: 'Tenant Application', href: '/apply/tenant' },
+                                { label: 'Owner Application', href: `${APP_URL}/apply/owner` },
+                                { label: 'Tenant Application', href: `${APP_URL}/apply/tenant` },
                             ].map((item) => (
                                 <li key={item.href}>
                                     <Link href={item.href} className="text-sm text-gray-500 hover:text-white transition-colors">

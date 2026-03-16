@@ -102,7 +102,7 @@ export default function CosignerSubmitPage() {
                     background: rgba(255, 255, 255, 0.08);
                 }
             `}</style>
-            <div className="min-h-screen pt-10 pb-20 px-6">
+            <div className="min-h-screen pt-24 pb-20 px-6">
                 <div className="max-w-2xl mx-auto">
                     <a href={MARKETING_URL} className="text-xs text-gray-500 hover:text-gray-300 transition-colors flex items-center gap-1 mb-6">
                         <ArrowLeft size={12} /> Back to Home

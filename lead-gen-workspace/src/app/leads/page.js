@@ -7,6 +7,7 @@ export default function LeadsPage() {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [importing, setImporting] = useState(false);
+  const [sendingEmail, setSendingEmail] = useState(null);
   const fileInputRef = useRef(null);
 
   // Filters state
@@ -83,6 +84,30 @@ export default function LeadsPage() {
         }
       }
     });
+  }
+
+  async function handleSendEmail(leadId) {
+    if (!confirm('Are you sure you want to send the first sequence email to this lead?')) return;
+    
+    setSendingEmail(leadId);
+    try {
+      const res = await fetch(`/api/leads/${leadId}/email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ emailIndex: 0 })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('Email sent successfully!');
+        fetchLeads(); // Refresh leads to update pipeline_status
+      } else {
+        alert('Failed to send email: ' + data.error);
+      }
+    } catch (err) {
+      alert('Error sending email');
+    } finally {
+      setSendingEmail(null);
+    }
   }
 
   return (
@@ -172,8 +197,16 @@ export default function LeadsPage() {
                       </span>
                     </td>
                     <td><span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{lead.campaign_name || '-'}</span></td>
-                    <td>
+                    <td style={{ display: 'flex', gap: 'var(--space-2)' }}>
                       <button className="btn" style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}>Edit</button>
+                      <button 
+                        className="btn btn-primary" 
+                        style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                        disabled={sendingEmail === lead.id || lead.pipeline_status === 'contacted'}
+                        onClick={() => handleSendEmail(lead.id)}
+                      >
+                        {sendingEmail === lead.id ? 'Sending...' : lead.pipeline_status === 'contacted' ? 'Sent' : 'Email'}
+                      </button>
                     </td>
                   </tr>
                 ))}

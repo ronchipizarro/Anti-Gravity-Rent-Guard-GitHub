@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grenty Miami: Plan de Éxito a 90 Días</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        grenty: {
+                            navy: '#00338D',
+                            red: '#D01F25',
+                            light: '#F2F2F2',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #000B1D; /* Deep dark tech background for the Fintech feel */
+            color: #FFFFFF;
+            overflow-x: hidden;
+        }
+        
+        /* Glassmorphism utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(0, 51, 141, 0.1) 0%, rgba(208, 31, 37, 0.05) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 51, 141, 0.3);
+            border-color: rgba(208, 31, 37, 0.3);
+        }
+
+        /* Ambient Glows */
+        .glow-blue {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0,51,141,0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -200px;
+            left: -200px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glow-red {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(208,31,37,0.1) 0%, rgba(0,0,0,0) 70%);
+            bottom: 10%;
+            right: -100px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000B1D; }
+        ::-webkit-scrollbar-thumb { background: #00338D; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #D01F25; }
+
+        /* Animation Delays */
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+    </style>
+</head>
+<body class="antialiased selection:bg-grenty-red selection:text-white">
+
+    <!-- Ambient Backgrounds -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
+        <div class="glow-blue"></div>
+        <div class="glow-red"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel border-b border-white/5 top-0">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <!-- User Uploaded Grenty Logo -->
+                <div class="relative h-10 flex items-center justify-center bg-white rounded-md p-1 overflow-hidden">
+                    <img src="Grenty/Logo%20Grenty%20-%20grey%20background.PNG" alt="Grenty" class="h-full w-auto object-contain mix-blend-multiply" style="filter: contrast(1.1) brightness(1.05);">
+                </div>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-semibold text-gray-300">
+                <a href="#el-reto" class="hover:text-grenty-red transition-colors">El Reto</a>
+                <a href="#la-solucion" class="hover:text-grenty-red transition-colors">Stack Tecnológico</a>
+                <a href="#el-funnel" class="hover:text-grenty-red transition-colors">ROI del Pipeline</a>
+                <a href="#propuesta" class="px-4 py-2 bg-grenty-navy hover:bg-grenty-red text-white rounded-full transition-colors">Aprobar Piloto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-20 px-6 relative">
+        <div class="max-w-5xl mx-auto text-center z-10 flex flex-col items-center">
+            <!-- Grenty Logo for Hero Section -->
+            <div class="mb-8 p-3 rounded-2xl bg-white animate-fade-in-up border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.1)] inline-flex items-center justify-center">
+                <img src="Grenty/Logo%20Grenty%20-%20grey%20background.PNG" alt="Grenty" class="h-14 w-auto object-contain mix-blend-multiply" style="filter: contrast(1.1) brightness(1.05);">
+            </div>
+
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border-grenty-navy/30 text-grenty-navy text-sm font-bold mb-8 animate-fade-in-up uppercase tracking-widest bg-white/5 delay-100">
+                <span class="w-2 h-2 rounded-full bg-grenty-red animate-pulse"></span>
+                Propuesta Estratégica Interna
+            </div>
+                        
+            <p class="text-xl md:text-3xl text-gray-300 max-w-3xl mx-auto mb-12 animate-fade-in-up delay-200 font-medium leading-relaxed">
+                Un Plan Sistemático de Pipeline a 90 días dirigido a los Property Managers de Miami-Dade.<br/><br/>
+                Porque el esfuerzo comercial solo falla cuando la <strong class="text-white">calidad y volumen</strong> de los prospectos falla.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-up delay-300">
+                <a href="#el-reto" class="px-8 py-4 bg-grenty-red text-white rounded-lg font-bold text-lg hover:bg-red-700 transition-all hover:scale-105 shadow-[0_0_20px_rgba(208,31,37,0.3)]">
+                    Explorar la Estrategia
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Challenge Section -->
+    <section id="el-reto" class="py-24 px-6 relative border-t border-white/5">
+        <div class="max-w-6xl mx-auto">
+            <!-- Section Logo -->
+            <div class="flex items-center gap-2 mb-8 opacity-70">
+                 <div class="relative h-8 flex items-center justify-center bg-white rounded-md p-1">
+                    <img src="Grenty/Logo%20Grenty%20-%20grey%20background.PNG" alt="Grenty" class="h-full w-auto object-contain mix-blend-multiply" style="filter: contrast(1.1) brightness(1.05);">
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-grenty-red font-bold tracking-widest uppercase text-sm mb-3">El Problema Central</h2>
+                    <h3 class="text-4xl font-bold mb-6">El Esfuerzo No es Suficiente. <br/>Necesitamos <span class="text-grenty-navy">Volumen y Precisión.</span></h3>
+                    <p class="text-gray-400 text-lg mb-6">
+                        El éxito de la oficina en Miami depende totalmente de conseguir reuniones con Property Managers en Miami-Dade. 
+                    </p>
+                    <p class="text-gray-400 text-lg mb-8">
+                        Confiar en la prospección manual significa que los comerciales pasan el <strong>40% de su tiempo buscando datos</strong> en lugar de vender. Si este lanzamiento no alcanza sus objetivos de ingresos, no será por falta de habilidades de venta, sino por la falta de leads viables y de alta calidad en la parte superior del embudo (funnel).
+                    </p>
+                    
+                    <div class="glass-panel p-6 rounded-xl border-l-4 border-grenty-red">
+                        <p class="font-semibold text-white">"Necesitamos suficientes leads para crear un pipeline creíble. No podemos escalar en Miami únicamente mediante networking manual."</p>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-grenty-navy/20 to-grenty-red/20 rounded-2xl blur-xl"></div>
+                    <div class="glass-card p-8 rounded-2xl relative">
+                        <h4 class="text-xl font-bold mb-6 text-white text-center">Manual vs. Sistematizado</h4>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="text-gray-400">Prospección Manual (Riesgo Actual)</span>
+                                    <span class="text-grenty-red font-bold">~50 Leads / Mes</span>
+                                </div>
+                                <div class="w-full bg-gray-800 rounded-full h-2">
+                                    <div class="bg-grenty-red h-2 rounded-full" style="width: 5%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="text-gray-300 font-semibold">Stack Sistematizado (Propuesta)</span>
+                                    <span class="text-grenty-navy font-bold">10,000 Leads / Mes</span>
+                                </div>
+                                <div class="w-full bg-gray-800 rounded-full h-2">
+                                    <div class="bg-grenty-navy h-2 rounded-full relative overflow-hidden" style="width: 100%">
+                                        <div class="absolute inset-0 bg-white/20 animate-[translateX_2s_infinite]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Solution / Tech Stack Section -->
+    <section id="la-solucion" class="py-24 px-6 bg-black/40 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Logo -->
+            <div class="flex items-center justify-center gap-2 mb-8 opacity-70">
+                 <div class="relative h-8 flex items-center justify-center bg-white rounded-md p-1">
+                    <img src="Grenty/Logo%20Grenty%20-%20grey%20background.PNG" alt="Grenty" class="h-full w-auto object-contain mix-blend-multiply" style="filter: contrast(1.1) brightness(1.05);">
+                </div>
+            </div>
+
+            <div class="text-center mb-16">
+                <h2 class="text-grenty-red font-bold tracking-widest uppercase text-sm mb-3">La Maquinaria</h2>
+                <h3 class="text-4xl font-bold">Los 3 Pilares de Ingresos Predecibles</h3>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Para garantizar la credibilidad del pipeline, necesitamos un stack tecnológico moderno de <i>outbound</i>. Cada herramienta cumple un propósito matemático e innegociable.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Pillar 1: Apollo -->
+                <div class="glass-card p-8 rounded-2xl flex flex-col items-start relative overflow-hidden">
+                    <div class="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center mb-6 text-2xl border border-white/20">
+                        🎯
+                    </div>
+                    <h4 class="text-2xl font-bold mb-2">1. Apollo.io</h4>
+                    <p class="text-grenty-navy font-semibold text-sm uppercase tracking-wider mb-4">El Motor de Leads</p>
+                    
+                    <div class="mb-6 space-y-4 flex-grow">
+                        <div class="bg-white/5 p-4 rounded-lg">
+                            <span class="block text-xs text-gray-400 uppercase mb-1">Objetivo</span>
+                            <span class="text-sm font-medium">Extracción de datos de contacto B2B precisos. Provee una lista verificada de Property Managers en Miami-Dade.</span>
+                        </div>
+                        <div class="bg-grenty-navy/10 border border-grenty-navy/30 p-4 rounded-lg">
+                            <span class="block text-xs text-grenty-navy uppercase mb-1 font-bold">Por qué es Crítico</span>
+                            <p class="text-sm text-gray-300">Proporciona <strong class="text-white">10,000 prospectos verificados</strong> al mes integrados directamente con LinkedIn. Sin esto, los equipos desperdician un 40% de la semana buscando emails manualmente, destruyendo la reputación de nuestro dominio debido a la alta tasa de rebotes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pillar 2: Clay -->
+                <div class="glass-card p-8 rounded-2xl flex flex-col items-start relative overflow-hidden">
+                    <div class="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center mb-6 text-2xl border border-white/20">
+                        🧠
+                    </div>
+                    <h4 class="text-2xl font-bold mb-2">2. Clay</h4>
+                    <p class="text-white/60 font-semibold text-sm uppercase tracking-wider mb-4">El Cerebro</p>
+                    
+                    <div class="mb-6 space-y-4 flex-grow">
+                        <div class="bg-white/5 p-4 rounded-lg">
+                            <span class="block text-xs text-gray-400 uppercase mb-1">Objetivo</span>
+                            <span class="text-sm font-medium">Enriquecimiento automático de datos y ultra-personalización a escala.</span>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 p-4 rounded-lg">
+                            <span class="block text-xs text-gray-300 uppercase mb-1 font-bold">Por qué es Crítico</span>
+                            <p class="text-sm text-gray-300">Transforma una lista genérica en comunicación personalizada scrapeando las webs de los property managers. Incrementa las tasas de respuesta de correos fríos de un <strong class="text-grenty-red">1-2% a más del 15%</strong>. Evita que parezcamos un bot de spam.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pillar 3: Instantly -->
+                <div class="glass-card p-8 rounded-2xl flex flex-col items-start relative overflow-hidden">
+                    <div class="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center mb-6 text-2xl border border-white/20">
+                        ⚡
+                    </div>
+                    <h4 class="text-2xl font-bold mb-2">3. Instantly.ai</h4>
+                    <p class="text-grenty-red font-semibold text-sm uppercase tracking-wider mb-4">La Voz</p>
+                    
+                    <div class="mb-6 space-y-4 flex-grow">
+                        <div class="bg-white/5 p-4 rounded-lg">
+                            <span class="block text-xs text-gray-400 uppercase mb-1">Objetivo</span>
+                            <span class="text-sm font-medium">Envío masivo de correos y protección absoluta de la capacidad de entrega (deliverability).</span>
+                        </div>
+                        <div class="bg-grenty-red/10 border border-grenty-red/30 p-4 rounded-lg">
+                            <span class="block text-xs text-grenty-red uppercase mb-1 font-bold">Por qué es Crítico</span>
+                            <p class="text-sm text-gray-300">Distribuye el volumen de envíos a través de múltiples bandejas de entrada. Garantiza una <strong class="text-white">llegada a Inbox superior al 95%</strong> enviando miles de correos al día, protegiendo al 100% el dominio <code>@grenty.us</code> de ser catalogado como <i>blacklist</i>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pipeline Funnel Visualization -->
+    <section id="el-funnel" class="py-24 px-6 relative border-t border-white/5">
+        <div class="max-w-5xl mx-auto">
+            <!-- Section Logo -->
+            <div class="flex items-center justify-center gap-2 mb-8 opacity-70">
+                 <div class="relative h-8 flex items-center justify-center bg-white rounded-md p-1">
+                    <img src="Grenty/Logo%20Grenty%20-%20grey%20background.PNG" alt="Grenty" class="h-full w-auto object-contain mix-blend-multiply" style="filter: contrast(1.1) brightness(1.05);">
+                </div>
+            </div>
+
+            <div class="text-center mb-16">
+                <h2 class="text-grenty-navy font-bold tracking-widest uppercase text-sm mb-3">Matemáticas, no Magia</h2>
+                <h3 class="text-4xl font-bold mb-4">El Funnel de Miami-Dade</h3>
+                <p class="text-gray-400">Sin el stack tecnológico, este volumen es inviable. Con el stack, se convierte en una ecuación de la que somos dueños.</p>
+            </div>
+
+            <!-- Funnel Layout -->
+            <div class="space-y-4 max-w-3xl mx-auto">
+                
+                <!-- Step 1 -->
+                <div class="glass-panel p-6 rounded-xl border border-white/10 relative flex justify-between items-center overflow-hidden group">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-gray-600 transition-all group-hover:bg-grenty-navy"></div>
+                    <div class="z-10">
+                        <h4 class="text-xl font-bold text-white">Prospectos (Leads) Contactados Mensualmente</h4>
+                        <p class="text-sm text-gray-400">Generados vía Apollo, Enriquecidos a través de Clay</p>
+                    </div>
+                    <div class="z-10 text-right">
+                        <span class="text-4xl font-extrabold text-white">10,000</span>
+                        <p class="text-xs text-grenty-navy font-bold uppercase mt-1">Property Managers</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="glass-panel p-6 rounded-xl border border-white/10 relative flex justify-between items-center overflow-hidden group mx-4">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-grenty-navy transition-all group-hover:bg-grenty-navy group-hover:w-2"></div>
+                    <div class="absolute inset-0 bg-grenty-navy/5"></div>
+                    <div class="z-10">
+                        <h4 class="text-xl font-bold text-white">Respuestas Positivas</h4>
+                        <p class="text-sm text-gray-400">Entregados en Bandeja Principal vía Instantly (Asumiendo conservadoramente un 5%)</p>
+                    </div>
+                    <div class="z-10 text-right">
+                        <span class="text-4xl font-extrabold text-grenty-navy">500</span>
+                        <p class="text-xs text-grenty-navy font-bold uppercase mt-1">Leads Comprometidos</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="glass-panel p-6 rounded-xl border border-white/10 relative flex justify-between items-center overflow-hidden group mx-12">
+                     <div class="absolute left-0 top-0 bottom-0 w-1 bg-grenty-red transition-all group-hover:bg-grenty-red group-hover:w-2"></div>
+                     <div class="absolute inset-0 bg-grenty-red/10"></div>
+                    <div class="z-10">
+                        <h4 class="text-xl font-bold text-white">Reuniones y Demos Agendadas</h4>
+                        <p class="text-sm text-gray-400">Conversión desde las respuestas positivas (Asumiendo un 20%)</p>
+                    </div>
+                    <div class="z-10 text-right">
+                        <span class="text-4xl font-extrabold text-grenty-red">100</span>
+                        <p class="text-xs text-grenty-red font-bold uppercase mt-1">Reuniones / Mes</p>
+                    </div>
+                </div>
+                
+                <!-- Conclusion Box -->
+                <div class="mt-8 p-6 text-center border-t border-white/10 pt-8 relative overflow-hidden rounded-2xl glass-card">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-grenty-navy/20 to-grenty-red/20"></div>
+                    <div class="relative z-10">
+                        <p class="text-lg text-gray-300">Con una <strong>Tasa de Cierre de Reuniones del <strong class="text-grenty-red text-2xl mx-1 font-extrabold">20%</strong></strong>, el modelo asegura:</p>
+                        <h4 class="text-5xl font-extrabold text-white mt-4 mb-2">20</h4>
+                        <p class="text-grenty-navy font-bold uppercase tracking-widest text-sm">Nuevos Partners y PMs Firmados Mensualmente</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Proposal Section -->
+    <section id="propuesta" class="py-24 px-6 bg-gradient-to-b from-transparent to-grenty-navy/20 relative border-t border-white/5">
+        <div class="max-w-4xl mx-auto text-center">
+            <!-- Section Logo -->
+            <div class="flex items-center justify-center gap-2 mb-8 opacity-70">
+                 <div class="relative h-8 flex items-center justify-center bg-white rounded-md p-1">
+                    <img src="Grenty/Logo%20Grenty%20-%20grey%20background.PNG" alt="Grenty" class="h-full w-auto object-contain mix-blend-multiply" style="filter: contrast(1.1) brightness(1.05);">
+                </div>
+            </div>
+
+            <h2 class="text-5xl font-bold mb-8">La Solicitud de Piloto (90 Días)</h2>
+            <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+                Autorice el gasto del stack tecnológico por exactamente 3 meses. Permita que el Pipeline demuestre y compruebe su ROI antes de fin de trimestre.
+            </p>
+            
+            <div class="glass-card p-10 rounded-2xl max-w-2xl mx-auto text-left relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-grenty-red/20 blur-3xl rounded-full"></div>
+                
+                <h3 class="text-2xl font-bold mb-6 border-b border-white/10 pb-4">Estimación Comercial Mensual</h3>
+                
+                <ul class="space-y-4 mb-8">
+                    <li class="flex justify-between items-center">
+                        <span class="text-gray-300 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-grenty-navy"></span> Apollo (Datos)
+                        </span>
+                        <span class="font-bold text-white">~$99</span>
+                    </li>
+                    <li class="flex justify-between items-center">
+                        <span class="text-gray-300 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-grenty-navy"></span> Clay (Enriquecimiento)
+                        </span>
+                        <span class="font-bold text-white">~$149</span>
+                    </li>
+                    <li class="flex justify-between items-center">
+                        <span class="text-gray-300 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-grenty-red"></span> Instantly (Escala y Protección)
+                        </span>
+                        <span class="font-bold text-white">~$97</span>
+                    </li>
+                    <li class="flex justify-between items-center pt-4 border-t border-white/10">
+                        <span class="text-lg font-bold">Inversión Total del Piloto</span>
+                        <span class="text-2xl font-extrabold text-grenty-red">~$345 / mes</span>
+                    </li>
+                </ul>
+                
+                <div class="text-center mt-10">
+                    <button class="px-10 py-5 bg-gradient-to-r from-grenty-navy to-grenty-red text-white rounded-xl font-bold text-xl hover:shadow-[0_0_30px_rgba(208,31,37,0.4)] transition-all hover:scale-105 w-full">
+                        Aprobar Piloto de Expansión
+                    </button>
+                    <p class="text-xs text-gray-500 mt-4 uppercase tracking-wider">Mitigue el riesgo del lanzamiento. Garantice un volumen predecible.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center border-t border-white/5 bg-black">
+        <!-- Section Logo in Footer -->
+        <div class="flex items-center justify-center gap-2 mb-4 opacity-70">
+             <div class="relative h-6 flex items-center justify-center bg-white rounded-md p-0.5">
+                <img src="Grenty/Logo%20Grenty%20-%20grey%20background.PNG" alt="Grenty" class="h-full w-auto object-contain mix-blend-multiply" style="filter: contrast(1.1) brightness(1.05);">
+            </div>
+        </div>
+        <p class="text-gray-600 text-sm">© 2026 Grenty Inc. | Documentación Estratégica Interna | Expansión en Miami-Dade</p>
+    </footer>
+
+</body>
+</html>

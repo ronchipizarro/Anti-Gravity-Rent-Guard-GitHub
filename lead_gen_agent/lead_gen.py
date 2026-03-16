@@ -35,29 +35,20 @@ MARKETS = {
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "output")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/120.0.0.0 Safari/537.36"
-    ),
-    "Accept-Language": "en-US,en;q=0.9",
-}
-
-
 # ─── Data Model ───────────────────────────────────────────────────────────────
 
 @dataclass
 class Lead:
     id: str = ""
+    full_name: str = ""
     first_name: str = ""
     last_name: str = ""
-    full_name: str = ""
+    company: str = ""
+    title: str = ""
     email: str = ""
     phone: str = ""
-    company: str = ""
-    title: str = ""           # Agent, Broker, Property Manager, etc.
-    market: str = ""
+    website: str = ""
+    linkedin_url: str = ""
     city: str = ""
     state: str = "FL"
     source: str = ""
@@ -65,157 +56,115 @@ class Lead:
     
     # Outreach tracking
     outreach_status: str = "Not Contacted"
-    email_1_sent: str = ""
-    email_2_sent: str = ""
-    email_3_sent: str = ""
-    reply_received: str = ""
-    meeting_booked: str = ""
-    calendly_link: str = "https://calendly.com/rentguard/demo"
     notes: str = ""
     date_added: str = field(default_factory=lambda: datetime.now().strftime("%Y-%m-%d"))
 
 
-# ─── Email Template Generator ─────────────────────────────────────────────────
+# ─── Helpers ──────────────────────────────────────────────────────────────────
 
-def generate_email_sequence(lead: Lead) -> dict:
-    """Generate 3 personalized warm email touchpoints for a lead."""
-    
-    first = lead.first_name or lead.full_name.split()[0] if lead.full_name else "there"
-    market = lead.market or lead.city
-    
-    emails = {
-        "email_1_subject": f"Quick question, {first}",
-        "email_1_body": f"""Hey {first},
+def extract_emails(text: str) -> list[str]:
+    """Find email addresses using regex."""
+    if not text:
+        return []
+    # Basic email regex
+    pattern = r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+"
+    emails = re.findall(pattern, text)
+    # Filter out common false positives and image extensions
+    valid_emails = []
+    for e in emails:
+        e = e.lower()
+        if not any(e.endswith(ext) for ext in [".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg"]) and "sentry" not in e and "example" not in e:
+            valid_emails.append(e)
+    return list(set(valid_emails))
 
-I came across your profile and noticed you're doing great work in the {market} rental market — always impressive to see agents who really know their area.
-
-I'm reaching out because I'm one of the founders of RentGuard, and we just launched in Florida. We basically guarantee landlords collect rent no matter what — covering unpaid rent + all legal/eviction costs if a tenant defaults.
-
-The reason I'm reaching out specifically to you: we have a referral program for agents. When a landlord you work with buys coverage through RentGuard, you earn a fee. Zero extra work on your end — we handle everything online.
-
-Would love to show you how it works in 15 minutes. Mind if I grab some time on your calendar?
-
-→ Book here: {lead.calendly_link}
-
-Best,
-[Your Name]
-RentGuard | Florida
-""",
-        
-        "email_2_subject": f"Re: Quick question, {first}",
-        "email_2_body": f"""Hey {first},
-
-Just following up on my note from a few days ago — didn't want it to get buried.
-
-Here's the quick pitch: RentGuard protects landlords if their tenant stops paying. We cover 100% of unpaid rent + attorney fees throughout the eviction. No deductibles, no monthly cap.
-
-For you, every landlord client you refer earns you a commission with zero effort on your part. We handle the entire application online — no paperwork for you or your client.
-
-In {market}, we've seen agents use it as a differentiator to close deals faster. Landlords love it, tenants get approved quicker, and leases get signed.
-
-If even 2–3 of your landlord clients per month get covered, that's a meaningful income stream for you.
-
-Worth 15 minutes? → {lead.calendly_link}
-
-Cheers,
-[Your Name]
-RentGuard
-""",
-        
-        "email_3_subject": f"Last note from me, {first}",
-        "email_3_body": f"""{first},
-
-I know your inbox is a warzone, so I'll keep this my last note (unless you want to chat!).
-
-We're building something that genuinely helps landlords in {market} sleep at night. If it's ever relevant to you or a client, I'd love to connect.
-
-Drop me a reply anytime, or grab 15 minutes here: {lead.calendly_link}
-
-Either way, best of luck with the market — it's a busy one!
-
-[Your Name]
-RentGuard
-"""
-    }
-    
-    return emails
+def extract_phones(text: str) -> list[str]:
+    """Find phone numbers using regex."""
+    if not text:
+        return []
+    # Looks for shapes like (555) 555-5555 or 555-555-5555
+    pattern = r"\(?\b[2-9][0-9]{2}\)?[-.\s]?[2-9][0-9]{2}[-.\s]?[0-9]{4}\b"
+    phones = re.findall(pattern, text)
+    return list(set(phones))
 
 
 # ─── Scrapers ─────────────────────────────────────────────────────────────────
 
-def scrape_realtor_agents(city_slug: str, state: str, market_name: str, max_pages: int = 5) -> list[Lead]:
-    """Scrape real estate agent profiles from Realtor.com."""
+def scrape_with_google(market_name: str, max_leads: int = 15) -> list[Lead]:
+    """Scrape using googlesearch-python to bypass captchas and find agent profiles."""
     leads = []
     
-    for page in range(1, max_pages + 1):
-        url = f"https://www.realtor.com/realestateagents/{city_slug}_{state}/pg-{page}"
-        
-        try:
-            resp = requests.get(url, headers=HEADERS, timeout=15)
-            if resp.status_code != 200:
-                print(f"  [!] Realtor.com returned {resp.status_code} for {city_slug} page {page}")
-                break
-            
-            soup = BeautifulSoup(resp.text, "html.parser")
-            
-            # Agent cards
-            cards = soup.select("[data-testid='agent-card']") or soup.select(".agent-list-card")
-            
-            if not cards:
-                print(f"  [!] No agent cards found on page {page} (site structure may have changed)")
-                break
-            
-            for card in cards:
-                try:
-                    name_el = card.select_one("[data-testid='agent-name']") or card.select_one(".agent-name")
-                    name = name_el.get_text(strip=True) if name_el else ""
-                    
-                    company_el = card.select_one("[data-testid='agent-office']") or card.select_one(".agent-office")
-                    company = company_el.get_text(strip=True) if company_el else ""
-                    
-                    phone_el = card.select_one("[data-testid='agent-phone']") or card.select_one(".phone")
-                    phone = phone_el.get_text(strip=True) if phone_el else ""
-                    
-                    link_el = card.select_one("a[href*='/realestateagents/']")
-                    profile_url = "https://www.realtor.com" + link_el["href"] if link_el and link_el.get("href") else ""
-                    
-                    if not name:
-                        continue
-                    
-                    parts = name.split(" ", 1)
-                    lead = Lead(
-                        id=f"RLT-{market_name[:3].upper()}-{len(leads)+1:04d}",
-                        first_name=parts[0] if len(parts) > 0 else "",
-                        last_name=parts[1] if len(parts) > 1 else "",
-                        full_name=name,
-                        company=company,
-                        phone=phone,
-                        title="Real Estate Agent",
-                        market=market_name,
-                        city=city_slug.replace("-", " ").title(),
-                        source="Realtor.com",
-                        profile_url=profile_url,
-                    )
-                    leads.append(lead)
-                    
-                except Exception as e:
-                    print(f"  [!] Error parsing card: {e}")
-                    continue
-            
-            print(f"  - Realtor.com | {market_name} | Page {page} -> {len(cards)} agents")
-            time.sleep(random.uniform(2.5, 4.5))  # polite delay
-            
-        except Exception as e:
-            print(f"  [!] Request error for {city_slug} page {page}: {e}")
-            break
+    # We will search for LinkedIn profiles of agents in this city.
+    search_query = f'site:linkedin.com/in/ "Real Estate Agent" OR "Broker" "{market_name}, FL"'
+    print(f"  - Searching Google for: {search_query}")
     
+    try:
+        from googlesearch import search
+        
+        # googlesearch-python's advanced=True returns objects with title, url, description
+        results = search(search_query, num_results=max_leads, advanced=True, sleep_interval=5)
+        
+        for res in results:
+            try:
+                raw_title = res.title
+                profile_url = res.url
+                snippet_text = res.description
+                
+                if not raw_title or not profile_url:
+                    continue
+                    
+                # Clean up the LinkedIn title format: "John Doe - Real Estate Agent - Company | LinkedIn"
+                name = raw_title.split(" - ")[0].replace(" | LinkedIn", "").strip()
+                if not name or len(name.split()) < 2:
+                    continue
+                    
+                parts = name.split(" ", 1)
+                
+                # Try to guess company from the title or snippet
+                company = ""
+                if " - " in raw_title:
+                    title_parts = raw_title.split(" - ")
+                    if len(title_parts) > 2:
+                        company = title_parts[2].replace(" | LinkedIn", "").strip()
+                
+                # If we didn't find a company, default it
+                if not company or company == "LinkedIn":
+                    company = "Independent Agent"
+                    
+                # Extract any emails or phones from the Google snippet
+                emails = extract_emails(snippet_text)
+                phones = extract_phones(snippet_text)
+                
+                lead = Lead(
+                    id=f"GGL-{market_name[:3].upper()}-{len(leads)+1:04d}",
+                    first_name=parts[0],
+                    last_name=parts[1] if len(parts) > 1 else "",
+                    full_name=name,
+                    company=company,
+                    title="Real Estate Agent / Broker",
+                    email=emails[0] if emails else "",
+                    phone=phones[0] if phones else "",
+                    city=market_name,
+                    source="Google X-Ray (LinkedIn)",
+                    linkedin_url=profile_url,
+                    profile_url=profile_url,
+                )
+                leads.append(lead)
+                
+                if len(leads) >= max_leads:
+                    break
+                    
+            except Exception as e:
+                print(f"  [!] Error parsing Google result: {e}")
+                
+    except Exception as e:
+        print(f"  [!] Google search failed: {e}")
+        
     return leads
 
 
 def generate_mock_leads(market_name: str, count: int = 20) -> list[Lead]:
     """
     Generate realistic mock leads for development/testing.
-    In production, replace with real scraping calls.
     """
     first_names = ["Michael", "Sarah", "David", "Jennifer", "Robert", "Lisa", "James", "Maria",
                    "William", "Patricia", "Carlos", "Ana", "Jorge", "Michelle", "Kevin", "Sandra"]
@@ -236,14 +185,14 @@ def generate_mock_leads(market_name: str, count: int = 20) -> list[Lead]:
         
         lead = Lead(
             id=f"MOCK-{market_name[:3].upper()}-{i+1:04d}",
+            full_name=f"{first} {last}",
             first_name=first,
             last_name=last,
-            full_name=f"{first} {last}",
-            email=f"{first.lower()}.{last.lower()}@{company.split()[0].lower().replace('/', '')}.com",
-            phone=f"+1 (305) {random.randint(200,999)}-{random.randint(1000,9999)}",
             company=company,
             title=random.choice(titles),
-            market=market_name,
+            email=f"{first.lower()}.{last.lower()}@{company.split()[0].lower().replace('/', '')}.com",
+            phone=f"+1 (305) {random.randint(200,999)}-{random.randint(1000,9999)}",
+            website=f"https://{company.split()[0].lower()}.example.com",
             city=market_name,
             source="Mock Data (Dev)",
             profile_url="",
@@ -255,7 +204,7 @@ def generate_mock_leads(market_name: str, count: int = 20) -> list[Lead]:
 
 # ─── Export ───────────────────────────────────────────────────────────────────
 
-def export_to_csv(leads: list[Lead], include_emails: bool = True) -> str:
+def export_to_csv(leads: list[Lead]) -> str:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = os.path.join(OUTPUT_DIR, f"rentguard_leads_{timestamp}.csv")
     
@@ -263,17 +212,10 @@ def export_to_csv(leads: list[Lead], include_emails: bool = True) -> str:
         print("[!] No leads to export.")
         return ""
     
-    # Add email sequences to each lead row
-    rows = []
-    for lead in leads:
-        row = asdict(lead)
-        if include_emails:
-            emails = generate_email_sequence(lead)
-            row.update(emails)
-        rows.append(row)
+    rows = [asdict(lead) for lead in leads]
     
-    with open(filename, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+    with open(filename, "w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), delimiter=';')
         writer.writeheader()
         writer.writerows(rows)
     
@@ -288,11 +230,11 @@ def run(use_mock: bool = True, max_pages_per_market: int = 3):
     
     Args:
         use_mock: If True, generates mock data (for testing). 
-                  Set to False to run live scraping (be respectful of rate limits).
-        max_pages_per_market: Number of pages to scrape per market (live mode only).
+                  Set to False to run the Playwright Google X-ray scraper.
+        max_pages_per_market: Number of leads to target per market (approximate).
     """
     print("\n" + "=" * 60)
-    print("  RentGuard Lead Generation Agent - Florida MVP")
+    print("  RentGuard Lead Generation Agent - Florida MVP (Playwright)")
     print("=" * 60)
     
     all_leads: list[Lead] = []
@@ -301,23 +243,24 @@ def run(use_mock: bool = True, max_pages_per_market: int = 3):
         print(f"\n[Location] Processing: {market_name}, {state}")
         
         if use_mock:
-            leads = generate_mock_leads(market_name, count=25)
+            leads = generate_mock_leads(market_name, count=10)
             print(f"  - Generated {len(leads)} mock leads")
         else:
-            leads = scrape_realtor_agents(city_slug, state, market_name, max_pages=max_pages_per_market)
-            print(f"  - Scraped {len(leads)} leads from Realtor.com")
+            # We use max_pages_per_market * 10 to approximate the number of leads we want to process 
+            leads = scrape_with_google(market_name, max_leads=max_pages_per_market * 10)
+            print(f"  - Scraped {len(leads)} leads via Google X-Ray")
         
         all_leads.extend(leads)
     
     print(f"\n[Stats] Total leads collected: {len(all_leads)}")
     
-    csv_path = export_to_csv(all_leads, include_emails=True)
-    print(f"\n[Success] Exported to: {csv_path}")
-    print("\nColumns included:")
-    print("  - Lead info: name, email, phone, company, title, city, market, source")
-    print("  - Outreach tracking: outreach_status, email_1-3_sent, reply_received, meeting_booked")
-    print("  - Pre-written email templates: email_1-3 subject + body")
-    print("  - Calendly link pre-filled")
+    csv_path = export_to_csv(all_leads)
+    
+    if csv_path:
+        print(f"\n[Success] Exported to: {csv_path}")
+        print("\nColumns included:")
+        print("  - Lead info: full_name, email, phone, company, title, website, city, source")
+        print("  - Outreach tracking: outreach_status, notes")
     print("\n" + "=" * 60)
     
     return csv_path

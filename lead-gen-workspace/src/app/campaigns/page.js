@@ -43,7 +43,7 @@ export default function CampaignsPage() {
           </div>
         ) : (
           campaigns.map(campaign => (
-            <Link key={campaign.id} href={\`/campaigns/\${campaign.id}\`} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
+            <Link key={campaign.id} href={`/campaigns/${campaign.id}`} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
               <div className="card" style={{ transition: 'border-color 200ms', cursor: 'pointer' }} onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--primary)'} onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
                 <div className="card-body" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
@@ -51,7 +51,7 @@ export default function CampaignsPage() {
                     <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Targeting {campaign.geography} • {campaign.company_type}</p>
                   </div>
                   <div>
-                    <span className={\`badge badge-\${campaign.status === 'approved' ? 'success' : campaign.status === 'active' ? 'primary' : 'warning'}\`}>
+                    <span className={`badge badge-${campaign.status === 'approved' ? 'success' : campaign.status === 'active' ? 'primary' : 'warning'}`}>
                       {campaign.status}
                     </span>
                   </div>

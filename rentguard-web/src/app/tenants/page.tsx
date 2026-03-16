@@ -3,6 +3,9 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { ShieldCheck, UserCheck, Zap, CreditCard, Sparkles, ArrowRight, CheckCircle } from 'lucide-react'
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'
+
+
 export default function TenantsInfoPage() {
     return (
         <>
@@ -28,7 +31,7 @@ export default function TenantsInfoPage() {
                                 Get pre-qualified in minutes. We provide the institutional guarantee landlords trust,
                                 so you can stand out and secure your dream home.
                             </p>
-                            <Link href="/apply/tenant" className="btn-primary bg-green-600 hover:bg-green-500 border-green-500/50 gap-2 text-sm">
+                            <Link href={`${APP_URL}/apply/tenant`} className="btn-primary bg-green-600 hover:bg-green-500 border-green-500/50 gap-2 text-sm">
                                 Get Your Decision Now <ArrowRight size={14} />
                             </Link>
                         </div>
@@ -95,7 +98,7 @@ export default function TenantsInfoPage() {
                             Soft inquiry only — no credit score impact
                         </div>
                         <div className="flex justify-center gap-4">
-                            <Link href="/apply/tenant" className="btn-primary bg-green-600 hover:bg-green-500 border-green-500/50">Apply Now</Link>
+                            <Link href={`${APP_URL}/apply/tenant`} className="btn-primary bg-green-600 hover:bg-green-500 border-green-500/50">Apply Now</Link>
                             <Link href="/#faq" className="btn-secondary">Learn More</Link>
                         </div>
                     </div>

@@ -14,6 +14,9 @@ import {
   CheckCircle,
 } from 'lucide-react'
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'
+
+
 // ─── Hero ──────────────────────────────────────────────────────────────────
 function Hero() {
   return (
@@ -58,10 +61,10 @@ function Hero() {
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center gap-3 mt-2">
-          <Link href="/apply/owner" className="btn-primary gap-2">
+          <Link href={`${APP_URL}/apply/owner`} className="btn-primary gap-2">
             Get Protected as an Owner <ArrowRight size={14} />
           </Link>
-          <Link href="/apply/tenant" className="btn-secondary">
+          <Link href={`${APP_URL}/apply/tenant`} className="btn-secondary">
             Apply as Tenant
           </Link>
         </div>
@@ -164,7 +167,7 @@ function HowItWorks() {
         </div>
 
         <div className="flex justify-center mt-12">
-          <Link href="/apply/owner" className="btn-blue">
+          <Link href={`${APP_URL}/apply/owner`} className="btn-blue">
             Start Your Application <ArrowRight size={14} />
           </Link>
         </div>
@@ -251,10 +254,10 @@ function EstimateBanner() {
           See how affordable institutional-grade rental protection can be. Premiums start at just 4% of annual rent.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Link href="/apply/tenant" className="btn-secondary">
+          <Link href={`${APP_URL}/apply/tenant`} className="btn-secondary">
             Apply as Tenant
           </Link>
-          <Link href="/apply/owner" className="btn-primary gap-2">
+          <Link href={`${APP_URL}/apply/owner`} className="btn-primary gap-2">
             Apply as Owner <ArrowRight size={14} />
           </Link>
         </div>
@@ -383,10 +386,10 @@ function FinalCTA() {
           Join hundreds of landlords and property managers who collect rent no matter what.
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-3">
-          <Link href="/apply/owner" className="btn-primary gap-2">
+          <Link href={`${APP_URL}/apply/owner`} className="btn-primary gap-2">
             Owner Apply <ArrowRight size={14} />
           </Link>
-          <Link href="/apply/tenant" className="btn-secondary">
+          <Link href={`${APP_URL}/apply/tenant`} className="btn-secondary">
             Tenant Apply
           </Link>
         </div>

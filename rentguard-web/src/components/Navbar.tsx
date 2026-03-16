@@ -2,7 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+
 import { Menu, X } from 'lucide-react'
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'
 
 const navLinks = [
     { label: 'For Landlords', href: '/landlords' },
@@ -52,15 +55,15 @@ export default function Navbar() {
 
                 {/* CTA Buttons */}
                 <div className="hidden md:flex items-center gap-3">
-                    <Link href="/apply/tenant" className="text-sm text-gray-300 hover:text-white transition-colors duration-200 font-medium">
+                    <a href={`${APP_URL}/apply/tenant`} className="text-sm text-gray-300 hover:text-white transition-colors duration-200 font-medium">
                         Tenant Apply
-                    </Link>
-                    <Link
-                        href="/apply/owner"
+                    </a>
+                    <a
+                        href={`${APP_URL}/apply/owner`}
                         className="btn-primary text-xs px-5 py-2"
                     >
                         Owner Apply
-                    </Link>
+                    </a>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -87,12 +90,12 @@ export default function Navbar() {
                         </Link>
                     ))}
                     <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-white/8">
-                        <Link href="/apply/tenant" onClick={() => setMenuOpen(false)} className="btn-secondary text-center">
+                        <a href={`${APP_URL}/apply/tenant`} onClick={() => setMenuOpen(false)} className="btn-secondary text-center">
                             Tenant Apply
-                        </Link>
-                        <Link href="/apply/owner" onClick={() => setMenuOpen(false)} className="btn-primary text-center">
+                        </a>
+                        <a href={`${APP_URL}/apply/owner`} onClick={() => setMenuOpen(false)} className="btn-primary text-center">
                             Owner Apply
-                        </Link>
+                        </a>
                     </div>
                 </div>
             )}

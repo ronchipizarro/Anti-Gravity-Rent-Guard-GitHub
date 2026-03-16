@@ -342,7 +342,7 @@ export default function UnderwriteDashboard() {
                 .input-field:focus { border-color: rgba(59,130,246,0.6); }
             `}</style>
 
-            <div className="min-h-screen pt-6 pb-20 px-4 md:px-6">
+            <div className="min-h-screen pt-24 pb-20 px-4 md:px-6">
                 <div className="max-w-6xl mx-auto space-y-8">
 
                     {/* Header */}

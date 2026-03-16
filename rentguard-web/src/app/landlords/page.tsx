@@ -3,6 +3,9 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { CheckCircle, ArrowRight, Building2, BarChart3, Zap, Users } from 'lucide-react'
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'
+
+
 export default function LandlordsPage() {
     return (
         <>
@@ -27,7 +30,7 @@ export default function LandlordsPage() {
                             <p className="text-gray-400 text-lg max-w-xl leading-relaxed mb-8">
                                 RentGuard gives multi-family operators and portfolio owners institutional-grade protection. Turnover never disrupts your cash flow again.
                             </p>
-                            <Link href="/apply/owner" className="btn-primary gap-2 text-sm">
+                            <Link href={`${APP_URL}/apply/owner`} className="btn-primary gap-2 text-sm">
                                 Start Portfolio Onboarding <ArrowRight size={14} />
                             </Link>
                         </div>
@@ -112,7 +115,7 @@ export default function LandlordsPage() {
                     <div className="text-center pt-12 border-t border-white/8">
                         <h2 className="text-2xl font-bold text-white mb-4">Ready to stabilize your cash flow?</h2>
                         <div className="flex justify-center gap-4">
-                            <Link href="/apply/owner" className="btn-primary">Request Portfolio Review</Link>
+                            <Link href={`${APP_URL}/apply/owner`} className="btn-primary">Request Portfolio Review</Link>
                             <Link href="/#faq" className="btn-secondary">View FAQ</Link>
                         </div>
                     </div>

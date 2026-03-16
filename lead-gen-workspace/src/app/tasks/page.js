@@ -84,7 +84,7 @@ export default function TasksPage() {
                 {tasks.map(task => (
                   <tr key={task.id} style={{ opacity: task.status === 'completed' ? 0.6 : 1 }}>
                     <td>
-                      <span className={\`badge badge-\${task.status === 'open' ? 'warning' : 'neutral'}\`}>
+                      <span className={`badge badge-${task.status === 'open' ? 'warning' : 'neutral'}`}>
                         {task.status}
                       </span>
                     </td>

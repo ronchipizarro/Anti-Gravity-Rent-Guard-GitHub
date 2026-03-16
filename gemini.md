@@ -34,6 +34,8 @@ Refining marketing strategy and ensuring all assets (emails, PDFs, HTML presenta
 - Using a "Flashy Fintech" aesthetic for investor/institutional materials.
 - Keeping `lead-gen-workspace` separate until integration scope is defined.
 - Established automatic `gemini.md` maintenance protocol.
+- Configured Git synchronization with a root `.gitignore` and `sync.ps1` script for multi-computer development.
+
 
 ## Assumptions
 - Marketing V2 assets will replace V1 once user-approved.
@@ -61,4 +63,6 @@ I have overhauled the `marketing` assets, creating V2 versions of the Real Estat
 - Created new marketing assets: `incentive_recommendation.md`, `one_liner_pitch.md`, and `landlord_one_pager.md`.
 - Implemented automatic `gemini.md` maintenance protocol.
 - Reconciled project state with Claude's latest `claude.md` updates.
+- Successfully synchronized the entire project folder with GitHub (`ronchipizarro/Anti-Gravity-Rent-Guard-GitHub`).
+
 

@@ -14,7 +14,7 @@ export default function CampaignDetailPage({ params }) {
 
   async function fetchCampaign() {
     try {
-      const res = await fetch(\`/api/campaigns/\${params.id}\`);
+      const res = await fetch(`/api/campaigns/${params.id}`);
       const result = await res.json();
       if (result.success) {
         setData(result);
@@ -30,7 +30,7 @@ export default function CampaignDetailPage({ params }) {
     if (!confirm('This will approve the campaign and queue all leads for contact. Continue?')) return;
     
     try {
-      await fetch(\`/api/campaigns/\${params.id}\`, {
+      await fetch(`/api/campaigns/${params.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'approved' })
@@ -56,7 +56,7 @@ export default function CampaignDetailPage({ params }) {
           </p>
         </div>
         <div style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center' }}>
-          <span className={\`badge badge-\${campaign.status === 'approved' ? 'success' : campaign.status === 'active' ? 'primary' : 'warning'}\`} style={{ fontSize: '1rem', padding: '0.25rem 1rem' }}>
+          <span className={`badge badge-${campaign.status === 'approved' ? 'success' : campaign.status === 'active' ? 'primary' : 'warning'}`} style={{ fontSize: '1rem', padding: '0.25rem 1rem' }}>
             {campaign.status}
           </span>
           {campaign.status !== 'approved' && (
@@ -140,7 +140,7 @@ export default function CampaignDetailPage({ params }) {
                   </td>
                   <td>{lead.contact_role}</td>
                   <td>
-                    <span className={\`badge badge-\${lead.pipeline_status === 'approved' ? 'success' : 'neutral'}\`}>
+                    <span className={`badge badge-${lead.pipeline_status === 'approved' ? 'success' : 'neutral'}`}>
                       {lead.pipeline_status}
                     </span>
                   </td>

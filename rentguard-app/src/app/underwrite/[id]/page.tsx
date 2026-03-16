@@ -204,7 +204,7 @@ function UnderwriteReviewContent() {
                     transition: all 0.2s;
                 }
             `}</style>
-            <div className="min-h-screen pt-6 pb-20 px-6">
+            <div className="min-h-screen pt-24 pb-20 px-6">
                 <div className="max-w-4xl mx-auto">
                     <a href={MARKETING_URL} className="text-xs text-gray-500 hover:text-gray-300 transition-colors flex items-center gap-1 mb-6">
                         <ArrowLeft size={12} /> Back to Home
