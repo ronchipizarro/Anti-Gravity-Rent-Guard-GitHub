@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-import { resend } from '@/lib/resend';
+import { resend, RESEND_FROM_EMAIL } from '@/lib/resend';
 import { renderEmail } from '@/lib/email-renderer';
 import { TenantDecisionEmail } from '@/components/emails/TenantDecisionEmail';
 import { CosignerRequestEmail } from '@/components/emails/CosignerRequestEmail';
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
             try {
                 if (action === 'approve' || action === 'reject') {
                     await resend.emails.send({
-                        from: 'RentGuard <noreply@contact.rentguard.us.com>',
+                        from: RESEND_FROM_EMAIL,
                         to: [tenantEmail],
                         subject: action === 'approve'
                             ? '🎉 Your RentGuard Application Has Been Approved!'
@@ -93,7 +93,7 @@ export async function POST(request: Request) {
                     });
                 } else if (action === 'cosigner') {
                     await resend.emails.send({
-                        from: 'RentGuard <noreply@contact.rentguard.us.com>',
+                        from: RESEND_FROM_EMAIL,
                         to: [tenantEmail],
                         subject: 'Action Required: Cosigner Needed for Your RentGuard Application',
                         html: await renderEmail(React.createElement(CosignerRequestEmail, {

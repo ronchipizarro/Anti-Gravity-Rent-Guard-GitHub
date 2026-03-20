@@ -7,7 +7,7 @@ import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { generateContractPdf } from '@/lib/contract-pdf'
 import { createSignatureEnvelope } from '@/lib/dropbox-sign'
-import { resend } from '@/lib/resend'
+import { resend, RESEND_FROM_EMAIL } from '@/lib/resend';
 import { renderEmail } from '@/lib/email-renderer'
 import { ContractSentEmail } from '@/components/emails/ContractSentEmail'
 import React from 'react'
@@ -132,7 +132,7 @@ export async function POST(request: Request) {
                 const signerEmails = [contractData.tenant.email, contractData.owner.email].filter(Boolean)
                 await Promise.all(signerEmails.map(async email =>
                     resend!.emails.send({
-                        from: 'RentGuard <noreply@contact.rentguard.us.com>',
+                        from: RESEND_FROM_EMAIL,
                         to: [email],
                         subject: 'Your RentGuard Protection Contracts are Ready to Sign',
                         html: await renderEmail(React.createElement(ContractSentEmail as any, emailData)),

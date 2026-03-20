@@ -6,7 +6,7 @@
 
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
-import { resend } from '@/lib/resend'
+import { resend, RESEND_FROM_EMAIL } from '@/lib/resend';
 import { renderEmail } from '@/lib/email-renderer'
 import { PaymentRequestEmail } from '@/components/emails/PaymentRequestEmail'
 import { PaymentNoticeEmail } from '@/components/emails/PaymentNoticeEmail'
@@ -117,7 +117,7 @@ export async function POST(request: Request) {
             if (resend) {
                 // Email to fee payer
                 await resend!.emails.send({
-                    from: 'RentGuard <noreply@contact.rentguard.us.com>',
+                    from: RESEND_FROM_EMAIL,
                     to: [feePayerEmail],
                     subject: 'Complete Your RentGuard Payment – Protection Activation',
                     html: await renderEmail(React.createElement(PaymentRequestEmail as any, {
@@ -132,7 +132,7 @@ export async function POST(request: Request) {
                 // Email to non-fee payer (informational)
                 if (nonFeePayerEmail) {
                     await resend!.emails.send({
-                        from: 'RentGuard <noreply@contact.rentguard.us.com>',
+                        from: RESEND_FROM_EMAIL,
                         to: [nonFeePayerEmail],
                         subject: 'RentGuard Protection – Payment in Progress',
                         html: await renderEmail(React.createElement(PaymentNoticeEmail as any, {
@@ -147,7 +147,7 @@ export async function POST(request: Request) {
                 // Email to underwriter
                 const underwriterEmail = process.env.UNDERWRITER_EMAIL || 'francisco@usadamant.com'
                 await resend!.emails.send({
-                    from: 'RentGuard <noreply@contact.rentguard.us.com>',
+                    from: RESEND_FROM_EMAIL,
                     to: [underwriterEmail],
                     subject: `Payment Requested - ${propertyAddress}`,
                     html: await renderEmail(React.createElement(PaymentRequestEmail as any, {

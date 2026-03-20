@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-import { resend } from '@/lib/resend';
+import { resend, RESEND_FROM_EMAIL } from '@/lib/resend';
 import { renderEmail } from '@/lib/email-renderer';
 import { CosignerInviteEmail } from '@/components/emails/CosignerInviteEmail';
 import React from 'react';
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
         if (resend && cosignerData.email) {
             try {
                 await resend.emails.send({
-                    from: 'RentGuard <noreply@contact.rentguard.us.com>',
+                    from: RESEND_FROM_EMAIL,
                     to: [cosignerData.email],
                     subject: `${tenantName} needs you as a cosigner — RentGuard`,
                     html: await renderEmail(React.createElement(CosignerInviteEmail, {

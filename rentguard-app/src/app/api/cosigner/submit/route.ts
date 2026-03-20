@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-import { resend } from '@/lib/resend';
+import { resend, RESEND_FROM_EMAIL } from '@/lib/resend';
 import { renderEmail } from '@/lib/email-renderer';
 import { AgentReviewEmail } from '@/components/emails/AgentReviewEmail';
 import React from 'react';
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
         if (resend) {
             try {
                 await resend.emails.send({
-                    from: 'RentGuard <noreply@contact.rentguard.us.com>',
+                    from: RESEND_FROM_EMAIL,
                     to: [UNDERWRITER_EMAIL],
                     subject: `[Cosigner Docs Received] ${tenantName} — Cosigner: ${cosignerName}`,
                     html: await renderEmail(React.createElement(AgentReviewEmail, {

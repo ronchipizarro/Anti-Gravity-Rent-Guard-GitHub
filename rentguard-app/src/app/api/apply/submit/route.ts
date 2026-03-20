@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-import { resend } from '@/lib/resend';
+import { resend, RESEND_FROM_EMAIL } from '@/lib/resend';
 import { renderEmail } from '@/lib/email-renderer';
 import { underwrite, UnderwritingInput } from '@/lib/underwriting';
 import { AgentReviewEmail } from '@/components/emails/AgentReviewEmail';
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
             // 4a. Email to human underwriting agent
             try {
                 await resend.emails.send({
-                    from: 'RentGuard <noreply@contact.rentguard.us.com>',
+                    from: RESEND_FROM_EMAIL,
                     to: [UNDERWRITER_EMAIL],
                     subject: `[Review Required] New Application — ${tenantName}`,
                     html: await renderEmail(React.createElement(AgentReviewEmail, {
@@ -107,7 +107,7 @@ export async function POST(request: Request) {
             if (resolvedOwnerEmail) {
                 try {
                     await resend.emails.send({
-                        from: 'RentGuard <noreply@contact.rentguard.us.com>',
+                        from: RESEND_FROM_EMAIL,
                         to: [resolvedOwnerEmail],
                         subject: `Application Submitted — ${tenantName}`,
                         html: await renderEmail(React.createElement(OwnerNotificationEmail, {
