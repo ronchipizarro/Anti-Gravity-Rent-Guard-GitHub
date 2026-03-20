@@ -14,7 +14,7 @@ import {
   CheckCircle,
 } from 'lucide-react'
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.rentguard.us.com'
 
 
 // ─── Hero ──────────────────────────────────────────────────────────────────

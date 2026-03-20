@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 
-const MARKETING_URL = process.env.NEXT_PUBLIC_MARKETING_URL || 'http://localhost:3000'
+const MARKETING_URL = process.env.NEXT_PUBLIC_MARKETING_URL || 'https://rentguard.us.com'
 
 export default function AppNavbar() {
     return (

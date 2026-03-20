@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent Guard Workspace Launcher</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+            --primary: #38bdf8;
+            --secondary: #94a3b8;
+            --success: #22c55e;
+            --accent: #0ea5e9;
+        }
+        body {
+            font-family: 'Inter', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, oxygen, ubuntu, cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        h1 {
+            margin-top: 0;
+            font-size: 2rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+        p {
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .pulse {
+            width: 10px;
+            height: 10px;
+            background-color: var(--success);
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 10px var(--success);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        .btn {
+            display: block;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.125rem;
+            box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3);
+            margin-bottom: 1rem;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(14, 165, 233, 0.4);
+            filter: brightness(1.1);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(56, 189, 248, 0.1);
+            border-left-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .port-list {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .port-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--secondary);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.875rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s;
+        }
+        .port-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Scanning for active workspace...</p>
+        </div>
+
+        <div id="ready" style="display: none;">
+            <div class="status-badge">
+                <div class="pulse"></div>
+                Workspace Active
+            </div>
+            <h1>Anti-Gravity Rent Guard</h1>
+            <p>The Lead Generation workspace is up and running. Click below to launch the dashboard.</p>
+            <a id="launch-btn" href="#" target="_blank" class="btn">Launch Dashboard</a>
+            
+            <div class="port-list">
+                <p style="margin-bottom: 0.5rem; font-size: 0.75rem;">Other active ports:</p>
+                <div id="fallback-ports"></div>
+            </div>
+        </div>
+
+        <div id="error" style="display: none;">
+            <h1>Workspace Offline</h1>
+            <p>We couldn't find an active workspace. Please ensure `npm run dev` is running in your terminal.</p>
+            <div class="port-list">
+                <a href="http://localhost:3000" class="port-btn">Try Port 3000</a>
+                <a href="http://localhost:3002" class="port-btn">Try Port 3002</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const PORTS = [3000, 3001, 3002, 3003, 3004, 3005];
+        const loadingEl = document.getElementById('loading');
+        const readyEl = document.getElementById('ready');
+        const errorEl = document.getElementById('error');
+        const launchBtn = document.getElementById('launch-btn');
+        const fallbackContainer = document.getElementById('fallback-ports');
+
+        async function checkPort(port) {
+            try {
+                // We use image for generic CORS-safe check or fetch with short timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 1000);
+                
+                const response = await fetch(`http://localhost:${port}/api/hello`, { // Common Next.js route or just /
+                    method: 'GET',
+                    mode: 'no-cors',
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                return true;
+            } catch (err) {
+                return false;
+            }
+        }
+
+        async function init() {
+            const activePorts = [];
+            
+            for (const port of PORTS) {
+                if (await checkPort(port)) {
+                    activePorts.push(port);
+                }
+            }
+
+            loadingEl.style.display = 'none';
+
+            if (activePorts.length > 0) {
+                // Sort to prefer 3002 as the lead gen workspace
+                activePorts.sort((a, b) => (a === 3002 ? -1 : (b === 3002 ? 1 : a - b)));
+                
+                readyEl.style.display = 'block';
+                launchBtn.href = `http://localhost:${activePorts[0]}`;
+                launchBtn.textContent = `Launch Workspace (Port ${activePorts[0]})`;
+
+                if (activePorts.length > 1) {
+                    activePorts.slice(1).forEach(port => {
+                        const a = document.createElement('a');
+                        a.href = `http://localhost:${port}`;
+                        a.className = 'port-btn';
+                        a.textContent = `Open Port ${port}`;
+                        a.target = '_blank';
+                        fallbackContainer.appendChild(a);
+                    });
+                }
+            } else {
+                errorEl.style.display = 'block';
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>

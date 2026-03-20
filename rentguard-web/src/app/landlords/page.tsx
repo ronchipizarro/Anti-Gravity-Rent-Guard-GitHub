@@ -3,7 +3,7 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { CheckCircle, ArrowRight, Building2, BarChart3, Zap, Users } from 'lucide-react'
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.rentguard.us.com'
 
 
 export default function LandlordsPage() {

@@ -8,6 +8,7 @@ import {
     CheckCircle, XCircle, Clock, AlertTriangle, Home,
     Users, TrendingUp, Eye, Lock
 } from 'lucide-react'
+import { supabase } from '@/lib/supabase'
 
 const MARKETING_URL = process.env.NEXT_PUBLIC_MARKETING_URL ?? 'https://rentguard.com'
 
@@ -259,6 +260,36 @@ export default function UnderwriteDashboard() {
         if (authenticated) fetchApps()
     }, [authenticated])
 
+    // ─── Auto-refresh when page becomes visible ────────────────────────────────────
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (!document.hidden && authenticated) {
+                fetchApps()
+            }
+        }
+        document.addEventListener('visibilitychange', handleVisibilityChange)
+        return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }, [authenticated])
+
+    // ─── Supabase realtime subscription for live updates ──────────────────────────
+    useEffect(() => {
+        if (!authenticated || !supabase) return
+
+        const channel = supabase
+            .channel('applications_changes')
+            .on('postgres_changes',
+                { event: '*', schema: 'public', table: 'applications' },
+                () => {
+                    // Refetch all applications when any change occurs
+                    fetchApps()
+                })
+            .subscribe()
+
+        return () => {
+            channel.unsubscribe()
+        }
+    }, [authenticated])
+
     // ── Derived stats ──────────────────────────────────────────────────────────
 
     const stats = useMemo(() => {
@@ -403,7 +434,7 @@ export default function UnderwriteDashboard() {
                                                         </Pie>
                                                         <Tooltip
                                                             contentStyle={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'white', fontSize: '12px' }}
-                                                            formatter={(value: number, name: string) => [`${value} apps`, name]}
+                                                            formatter={(value: any, name: any) => [`${value} apps`, name]}
                                                         />
                                                     </PieChart>
                                                 </ResponsiveContainer>
@@ -437,7 +468,7 @@ export default function UnderwriteDashboard() {
                                                 <YAxis dataKey="name" type="category" tick={{ fill: '#9ca3af', fontSize: 12 }} axisLine={false} tickLine={false} width={70} />
                                                 <Tooltip
                                                     contentStyle={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'white', fontSize: '12px' }}
-                                                    formatter={(v: number) => [`${v} applications`]}
+                                                    formatter={(v: any) => [`${v} applications`]}
                                                 />
                                                 <Bar dataKey="count" radius={[0, 6, 6, 0]} fill="#3b82f6" opacity={0.8} />
                                             </BarChart>

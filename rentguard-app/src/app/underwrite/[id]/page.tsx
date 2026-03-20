@@ -92,6 +92,10 @@ function UnderwriteReviewContent() {
     const [error, setError] = useState('')
     const [docUrls, setDocUrls] = useState<Record<string, string>>({})
     const [phase2Toast, setPhase2Toast] = useState('')
+    const [sendingContract, setSendingContract] = useState(false)
+    const [requestingPayment, setRequestingPayment] = useState(false)
+    const [overrideFeePayerTo, setOverrideFeePayerTo] = useState<'owner' | 'tenant'>('owner')
+    const [feeCalculated, setFeeCalculated] = useState<number>(0)
 
     // Check session auth
     useEffect(() => {
@@ -125,6 +129,61 @@ function UnderwriteReviewContent() {
         }
     }
 
+    const handleSendContracts = async () => {
+        setSendingContract(true)
+        try {
+            const res = await fetch('/api/contracts/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ applicationId: id }),
+            })
+            const result = await res.json()
+            if (result.success) {
+                setPhase2Toast(`✓ Signature request created. Signers: ${result.signers?.map((s: any) => s.name).join(', ')}`)
+                // Refresh app data
+                if (supabase) {
+                    const { data } = await supabase.from('applications').select('*').eq('id', id).single()
+                    if (data) setApp(data)
+                }
+            } else {
+                alert(result.error || 'Failed to send contracts.')
+            }
+        } catch (err) {
+            console.error('Send Contracts Error:', err)
+            alert('Failed to send contracts.')
+        } finally {
+            setSendingContract(false)
+        }
+    }
+
+    const handleRequestPayment = async () => {
+        setRequestingPayment(true)
+        try {
+            const res = await fetch('/api/payments/create-link', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ applicationId: id }),
+            })
+            const result = await res.json()
+            if (result.success) {
+                const feeAmount = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(result.amount_cents / 100)
+                setPhase2Toast(`✓ Payment link created! Fee: ${feeAmount}${result.is_test ? ' (test mode)' : ''}`)
+                // Refresh app data
+                if (supabase) {
+                    const { data } = await supabase.from('applications').select('*').eq('id', id).single()
+                    if (data) setApp(data)
+                }
+            } else {
+                alert(result.error || 'Failed to request payment.')
+            }
+        } catch (err) {
+            console.error('Request Payment Error:', err)
+            alert('Failed to request payment.')
+        } finally {
+            setRequestingPayment(false)
+        }
+    }
+
     useEffect(() => {
         const fetchApp = async () => {
             if (!authenticated) return
@@ -145,9 +204,9 @@ function UnderwriteReviewContent() {
                 setApp(data)
                 // Generate signed URLs for all documents in this application (private bucket)
                 const allPaths: string[] = [
-                    ...Object.values(data.documents || {}),
-                    ...Object.values(data.tenant_data?.documents || {}),
-                    ...Object.values(data.owner_data?.documents || {}),
+                    ...Object.values(data.documents || {}) as string[],
+                    ...Object.values(data.tenant_data?.documents || {}) as string[],
+                    ...Object.values(data.owner_data?.documents || {}) as string[],
                 ]
                 const urls: Record<string, string> = {}
                 await Promise.all(
@@ -270,34 +329,67 @@ function UnderwriteReviewContent() {
                                         </div>
                                     )}
 
-                                    <div className="grid sm:grid-cols-2 gap-3">
-                                        <button
-                                            onClick={() => setPhase2Toast('Contract sending via Dropbox Sign coming in Phase 2.')}
-                                            className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all text-left group"
-                                        >
-                                            <div className="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/20">
-                                                <FileSignature size={16} className="text-blue-400" />
+                                    {/* Fee Payer Selector */}
+                                    {app?.status === 'CONTRACT_SIGNED' && (
+                                        <div className="mb-5 px-4 py-3 rounded-xl bg-white/5 border border-white/10">
+                                            <p className="text-xs text-gray-500 font-medium uppercase tracking-wider mb-3">Who should pay the fee?</p>
+                                            <div className="flex gap-4">
+                                                <label className="flex items-center gap-2 cursor-pointer">
+                                                    <input
+                                                        type="radio"
+                                                        value="owner"
+                                                        checked={overrideFeePayerTo === 'owner'}
+                                                        onChange={(e) => setOverrideFeePayerTo(e.target.value as 'owner')}
+                                                        className="w-4 h-4"
+                                                    />
+                                                    <span className="text-sm text-white">Owner</span>
+                                                </label>
+                                                <label className="flex items-center gap-2 cursor-pointer">
+                                                    <input
+                                                        type="radio"
+                                                        value="tenant"
+                                                        checked={overrideFeePayerTo === 'tenant'}
+                                                        onChange={(e) => setOverrideFeePayerTo(e.target.value as 'tenant')}
+                                                        className="w-4 h-4"
+                                                    />
+                                                    <span className="text-sm text-white">Tenant</span>
+                                                </label>
                                             </div>
-                                            <div>
-                                                <p className="text-sm font-semibold text-white">Send Contracts</p>
-                                                <p className="text-xs text-gray-500 mt-0.5">Rental + protection agreement</p>
-                                            </div>
-                                            <span className="ml-auto text-[10px] text-blue-400/70 border border-blue-500/20 rounded px-1.5 py-0.5">Phase 2</span>
-                                        </button>
+                                        </div>
+                                    )}
 
-                                        <button
-                                            onClick={() => setPhase2Toast('Stripe payment links coming in Phase 2.')}
-                                            className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-green-500/30 hover:bg-green-500/5 transition-all text-left group"
-                                        >
-                                            <div className="w-9 h-9 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-green-500/20">
-                                                <CreditCard size={16} className="text-green-400" />
-                                            </div>
-                                            <div>
-                                                <p className="text-sm font-semibold text-white">Request Payment</p>
-                                                <p className="text-xs text-gray-500 mt-0.5">Send Stripe payment link</p>
-                                            </div>
-                                            <span className="ml-auto text-[10px] text-green-400/70 border border-green-500/20 rounded px-1.5 py-0.5">Phase 2</span>
-                                        </button>
+                                    <div className="grid sm:grid-cols-2 gap-3">
+                                        {app?.status === 'APPROVED' && (
+                                            <button
+                                                onClick={handleSendContracts}
+                                                disabled={sendingContract}
+                                                className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all text-left group disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                <div className="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/20">
+                                                    <FileSignature size={16} className="text-blue-400" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-semibold text-white">{sendingContract ? 'Sending...' : 'Send Contracts'}</p>
+                                                    <p className="text-xs text-gray-500 mt-0.5">Generate PDF & e-signature</p>
+                                                </div>
+                                            </button>
+                                        )}
+
+                                        {app?.status === 'CONTRACT_SIGNED' && (
+                                            <button
+                                                onClick={handleRequestPayment}
+                                                disabled={requestingPayment}
+                                                className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-green-500/30 hover:bg-green-500/5 transition-all text-left group disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                <div className="w-9 h-9 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-green-500/20">
+                                                    <CreditCard size={16} className="text-green-400" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-semibold text-white">{requestingPayment ? 'Creating...' : 'Request Payment'}</p>
+                                                    <p className="text-xs text-gray-500 mt-0.5">Generate Stripe payment link</p>
+                                                </div>
+                                            </button>
+                                        )}
                                     </div>
 
                                     {phase2Toast && (

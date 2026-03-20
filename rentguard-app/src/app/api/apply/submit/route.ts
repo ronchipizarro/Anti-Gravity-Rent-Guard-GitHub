@@ -32,13 +32,26 @@ export async function POST(request: Request) {
         const rent = appData?.owner_data?.property?.monthly_rent || tenantData.monthly_rent || 3000;
 
         // 2. Run underwriting engine
+        // Resolve credit score: 'unknown' maps to 620 (YELLOW zone — manual review)
+        const rawCreditScore = tenantData.credit_score;
+        const resolvedCreditScore = !rawCreditScore || rawCreditScore === 'unknown'
+            ? 620
+            : Number(rawCreditScore);
+
+        // Resolve employment status
+        const empStatus = tenantData.employment_status || '';
+        let employmentStatus: UnderwritingInput['employmentStatus'] = 'other';
+        if (empStatus.includes('W-2')) employmentStatus = 'w2';
+        else if (empStatus.includes('1099') || empStatus.includes('Self')) employmentStatus = 'self_employed';
+        else if (empStatus.includes('Retired')) employmentStatus = 'retired';
+
         const underwritingInput: UnderwritingInput = {
             monthlyRent: Number(rent),
             monthlyGrossIncome: Number(tenantData.gross_income) + Number(tenantData.other_income || 0),
-            creditScore: 680, // placeholder — would come from credit check in production
-            employmentStatus: tenantData.employment_status?.includes('W-2') ? 'w2' : '1099',
+            creditScore: resolvedCreditScore,
+            employmentStatus,
             employmentTenureMonths: Number(tenantData.years_employed || 0) * 12,
-            priorEviction: false,
+            priorEviction: tenantData.eviction_history === 'yes',
         };
 
         const decision = underwrite(underwritingInput);

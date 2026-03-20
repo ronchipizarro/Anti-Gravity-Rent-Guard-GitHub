@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.rentguard.us.com'
 
 export default function Footer() {
     return (

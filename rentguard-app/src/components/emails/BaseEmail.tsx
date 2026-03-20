@@ -2,7 +2,7 @@ import * as React from 'react';
 
 interface BaseEmailProps {
     children: React.ReactNode;
-    previewText: string;
+    previewText?: string;
 }
 
 export const BaseEmail: React.FC<BaseEmailProps> = ({ children, previewText }) => (

@@ -3,27 +3,34 @@
   "configurations": [
     {
       "name": "rentguard-web",
-      "runtimeExecutable": "C:/Program Files/nodejs/node.exe",
+      "runtimeExecutable": "npm",
       "runtimeArgs": [
-        "node_modules/next/dist/bin/next",
-        "dev",
-        "--port",
-        "3000"
+        "run",
+        "dev"
       ],
       "port": 3000,
       "cwd": "rentguard-web"
     },
     {
       "name": "rentguard-app",
-      "runtimeExecutable": "C:/Program Files/nodejs/node.exe",
+      "runtimeExecutable": "C:\\Program Files\\nodejs\\node.exe",
       "runtimeArgs": [
         "node_modules/next/dist/bin/next",
-        "dev",
-        "--port",
-        "3001"
+        "dev"
       ],
       "port": 3001,
+      "autoPort": true,
       "cwd": "rentguard-app"
+    },
+    {
+      "name": "lead-gen-workspace",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "port": 3002,
+      "cwd": "lead-gen-workspace"
     }
   ]
 }

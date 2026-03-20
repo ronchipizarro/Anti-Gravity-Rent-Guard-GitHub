@@ -146,7 +146,19 @@ function Step2Sub({ formData, handleInputChange }: { formData: any, handleInputC
     )
 }
 
-function Step3Sub({ inviteMode, setInviteMode, formData }: { inviteMode: boolean, setInviteMode: (v: boolean) => void, formData: any }) { // eslint-disable-line @typescript-eslint/no-explicit-any
+function Step3Sub({ 
+    inviteMode, 
+    setInviteMode, 
+    formData,
+    uploadedFiles,
+    handleFileSelect
+}: { 
+    inviteMode: boolean, 
+    setInviteMode: (v: boolean) => void, 
+    formData: any,
+    uploadedFiles: Record<string, { name: string; size: number }>,
+    handleFileSelect: (docId: string, event: React.ChangeEvent<HTMLInputElement>) => void
+}) { // eslint-disable-line @typescript-eslint/no-explicit-any
     return (
         <div className="flex flex-col gap-6">
             <div className="p-5 rounded-2xl bg-white/5 border border-white/10">
@@ -185,16 +197,41 @@ function Step3Sub({ inviteMode, setInviteMode, formData }: { inviteMode: boolean
                         { id: 'income_proof', label: 'Proof of Income', req: true },
                         { id: 'bank_statements', label: 'Bank Statements', req: true },
                         { id: 'lease_draft', label: 'Draft Lease', req: false },
-                    ].map((doc) => (
-                        <div key={doc.id} className="flex flex-col gap-1.5">
-                            <label className="text-sm font-medium text-gray-300">{doc.label} {doc.req && <span className="text-blue-400">*</span>}</label>
-                            <label htmlFor={doc.id} className="flex items-center gap-3 w-full bg-white/5 border border-dashed border-white/15 rounded-xl px-4 py-4 text-sm text-gray-500 hover:border-blue-500/40 cursor-pointer transition-all">
-                                <Upload size={16} className="text-blue-400" />
-                                <span>Click to upload doc</span>
-                                <input id={doc.id} type="file" className="hidden" />
-                            </label>
-                        </div>
-                    ))}
+                    ].map((doc) => {
+                        const uploaded = uploadedFiles[doc.id]
+                        const fileSizeKB = uploaded ? (uploaded.size / 1024).toFixed(1) : 0
+                        return (
+                            <div key={doc.id} className="flex flex-col gap-1.5">
+                                <label className="text-sm font-medium text-gray-300">{doc.label} {doc.req && <span className="text-blue-400">*</span>}</label>
+                                <label htmlFor={doc.id} className={`flex items-center gap-3 w-full border rounded-xl px-4 py-4 text-sm cursor-pointer transition-all ${
+                                    uploaded
+                                        ? 'bg-green-500/10 border-green-500/40 text-green-300 hover:bg-green-500/15'
+                                        : 'bg-white/5 border-dashed border-white/15 text-gray-500 hover:border-blue-500/40'
+                                }`}>
+                                    {uploaded ? (
+                                        <>
+                                            <CheckCircle size={16} className="text-green-400" />
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-sm font-medium truncate">{uploaded.name}</p>
+                                                <p className="text-xs opacity-75">{fileSizeKB} KB</p>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Upload size={16} className="text-blue-400" />
+                                            <span>Click to upload doc</span>
+                                        </>
+                                    )}
+                                    <input
+                                        id={doc.id}
+                                        type="file"
+                                        className="hidden"
+                                        onChange={(e) => handleFileSelect(doc.id, e)}
+                                    />
+                                </label>
+                            </div>
+                        )
+                    })}
                 </div>
             )}
             <p className="text-xs text-gray-600 mt-2">
@@ -218,6 +255,17 @@ export default function OwnerApplyPage() {
         tenant_first: '', tenant_last: '', tenant_email: '', tenant_phone: '', employment: '', income: '',
         owner_email: '', fee_payer: 'owner'
     })
+    const [uploadedFiles, setUploadedFiles] = useState<Record<string, { name: string; size: number }>>({})
+
+    const handleFileSelect = (docId: string, event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0]
+        if (file) {
+            setUploadedFiles(prev => ({
+                ...prev,
+                [docId]: { name: file.name, size: file.size }
+            }))
+        }
+    }
 
     const handleNext = () => setStep((s) => Math.min(s + 1, 3))
     const handleBack = () => setStep((s) => Math.max(s - 1, 1))
@@ -368,7 +416,7 @@ export default function OwnerApplyPage() {
                             <form onSubmit={step === 3 ? handleSubmit : (e) => { e.preventDefault(); handleNext() }}>
                                 {step === 1 && <Step1Sub formData={formData} handleInputChange={handleInputChange} />}
                                 {step === 2 && <Step2Sub formData={formData} handleInputChange={handleInputChange} />}
-                                {step === 3 && <Step3Sub inviteMode={inviteMode} setInviteMode={setInviteMode} formData={formData} />}
+                                {step === 3 && <Step3Sub inviteMode={inviteMode} setInviteMode={setInviteMode} formData={formData} uploadedFiles={uploadedFiles} handleFileSelect={handleFileSelect} />}
 
                                 {!supabase && (
                                     <div className="mt-6 p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/30 flex items-start gap-3">

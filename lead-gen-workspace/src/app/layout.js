@@ -20,6 +20,7 @@ export default function RootLayout({ children }) {
               <Link href="/" style={{ padding: 'var(--space-2) var(--space-4)', borderRadius: 'var(--radius-md)', transition: 'background-color 150ms', textDecoration: 'none', color: 'inherit', display: 'block' }}>Dashboard</Link>
               <Link href="/campaigns/new" style={{ padding: 'var(--space-2) var(--space-4)', borderRadius: 'var(--radius-md)', transition: 'background-color 150ms', textDecoration: 'none', color: 'inherit', display: 'block' }}>New Campaign</Link>
               <Link href="/leads" style={{ padding: 'var(--space-2) var(--space-4)', borderRadius: 'var(--radius-md)', transition: 'background-color 150ms', textDecoration: 'none', color: 'inherit', display: 'block' }}>Leads</Link>
+              <Link href="/outreach" style={{ padding: 'var(--space-2) var(--space-4)', borderRadius: 'var(--radius-md)', transition: 'background-color 150ms', textDecoration: 'none', color: 'inherit', display: 'block' }}>Outreach</Link>
               <Link href="/tasks" style={{ padding: 'var(--space-2) var(--space-4)', borderRadius: 'var(--radius-md)', transition: 'background-color 150ms', textDecoration: 'none', color: 'inherit', display: 'block' }}>Tasks</Link>
             </nav>
           </aside>

@@ -1,158 +1,203 @@
-# RentGuard — Broker Cold Email Sequence
+# RentGuard — Broker Cold Email Sequence (v2)
 # 5-Touchpoint Campaign | Target: Florida Real Estate Agents & Brokers
-# Tone: Warm, casual, peer-to-peer | Goal: Book a 15-min demo call
+# Tone: Warm, peer-to-peer | Goal: Book a 15-min intro call
+# Updated: 2026-03-20 — concrete commission figures, product specifics, Miami focus
 
 ---
 
-## EMAIL 1 — Initial Outreach (Day 1)
-**Subject:** Quick question, {{first_name}} 👋
-**From:** [Your Name] | RentGuard
+## QUICK REFERENCE
+
+| Email | Day | Subject | Core angle |
+|-------|-----|---------|------------|
+| 1 | 0 | "Quick question, {{first_name}}" | Intro + referral program hook |
+| 2 | 4 | Re: same thread | What RentGuard actually does (3 bullets) |
+| 3 | 9 | "This might matter to your next landlord deal" | Closing tool angle |
+| 4 | 15 | "Something worth knowing if you do rentals in {{market}}" | Miami-specific urgency |
+| 5 | 22 | "Last note from me, {{first_name}}" | Soft close + referral plant |
+
+**Reply at any point → pause sequence, route to Santiago for live conversation.**
+
+---
+
+## EMAIL 1 — Initial Outreach (Day 0)
+
+**Subject:** Quick question, {{first_name}}
+**From:** Santiago [Last Name] | RentGuard
 
 ---
 
 Hey {{first_name}},
 
-I came across your profile and noticed you're doing great work in the {{market}} rental market — always impressive to see agents who really know their area.
+I came across your work in the {{market}} rental market — solid track record.
 
-Quick intro: I'm one of the co-founders of RentGuard. We just launched in Florida, and our whole thing is simple — we guarantee landlords collect rent no matter what. If a tenant defaults, we cover every dollar of unpaid rent + all legal and eviction costs.
+Quick intro: I'm with RentGuard. We just launched in Miami and we do one thing — we guarantee landlords collect their rent no matter what. If a tenant defaults, we cover the full unpaid balance, all eviction costs, and every legal fee. Landlord gets paid within 7 business days of filing a claim.
 
-The reason I'm reaching out specifically to you: **we have a referral program for agents.**
+The reason I'm reaching out: **we have a referral program for agents.**
 
-When a landlord you work with activates RentGuard coverage, you earn a referral fee. Zero extra work — we handle the entire application online, no broker involvement needed on your end.
+Every time a landlord you work with activates RentGuard coverage, you earn **10% of the protection fee**. On a $2,500/month rental, that's roughly $150–200 per deal, with zero extra work on your end. We handle the entire application online.
 
-Would love to show you how it works in 15 minutes.
+Worth 15 minutes of your time to hear how it works?
 
-👉 **Book here: [Calendly Link]**
+👉 **[Calendly Link]**
 
 Best,
-[Your Name]
-RentGuard | Florida
+Santiago
+RentGuard | rentguard.us.com
 
 ---
 
 ## EMAIL 2 — Follow-Up (Day 4)
+
 **Subject:** Re: Quick question, {{first_name}}
-**From:** [Your Name] | RentGuard
+**From:** Santiago [Last Name] | RentGuard
 
 ---
 
 Hey {{first_name}},
 
-Just following up — didn't want my last note to get lost in the inbox shuffle.
+Following up in case my last note got buried.
 
-Here's the quick pitch:
+Here's the short version of what RentGuard does:
 
-- 🏠 Your landlord client pays us 4–10% of annual rent
-- ✅ We vet the tenant (48-hour decision)
-- 💰 If they ever stop paying → we pay the landlord, handle the lawyers, manage the eviction
-- 🤝 You earn a referral fee. Every time.
+- **Your landlord client pays us 4–8% of annual rent** (one-time, upfront — or monthly with a small premium)
+- **We screen the tenant and make a decision in 48 hours**
+- **If the tenant stops paying:** we cover every dollar of missed rent + full eviction costs + legal fees. Landlord gets paid, we handle the lawyers, we manage the eviction entirely.
+- **You earn 10% of the protection fee** as a referral commission — paid after the deal closes.
 
-The best part? **You don't touch any paperwork.** Your client goes to our site, applies in 10 minutes, done.
+No paperwork for you. No explaining the service to the tenant. Your client visits rentguard.us.com, applies in 10 minutes, done.
 
-In {{market}}, I've been talking to a few agents who use it as a differentiator — landlords close faster when they know they're protected.
+In {{market}}, some agents use it as a differentiator when pitching landlord clients: "I work with a service that guarantees your rent." It changes the conversation.
 
-Worth 15 minutes of your time?
+Worth a quick call?
 
 → **[Calendly Link]**
 
 Cheers,
-[Your Name]
+Santiago
 RentGuard
 
 ---
 
 ## EMAIL 3 — Value Add (Day 9)
-**Subject:** This might matter to your next landlord deal
-**From:** [Your Name] | RentGuard
+
+**Subject:** This might matter to your next landlord deal, {{first_name}}
+**From:** Santiago [Last Name] | RentGuard
 
 ---
 
 {{first_name}} —
 
-Quick one — I wanted to share something beyond the pitch:
+One thing I keep hearing from landlords in Miami: **the anxiety doesn't end when the lease is signed.**
 
-One of the most common reasons landlord clients hesitate on a lease is **anxiety about the tenant.** Even with a security deposit, they know they're exposed if something goes wrong.
+A security deposit covers maybe 1–2 months. What happens if the tenant stops paying in month 6? Most landlords don't know the answer — and that uncertainty makes them overcautious: stricter tenant criteria, longer vacancy periods, more negotiating back and forth.
 
-RentGuard eliminates that hesitation entirely. When your landlord knows RentGuard has their back, they say yes faster. Leases close quicker. You get paid sooner.
+RentGuard removes that anxiety entirely. The landlord knows that no matter what happens after the lease is signed, they're covered for the full term. That peace of mind changes how they approach tenant selection — and it can close deals faster.
 
-And when the lease goes through? So does your referral fee.
-
-It's basically a closing tool disguised as rent protection.
+For you, that means less back-and-forth on a rental and a commission that pays twice (your agent fee + RentGuard referral fee).
 
 Happy to walk you through it: **[Calendly Link]**
 
-[Your Name]
-RentGuard
+Santiago
+RentGuard | rentguard.us.com
 
 ---
 
-## EMAIL 4 — Social Proof (Day 15)
-**Subject:** What one agent in Miami told us...
-**From:** [Your Name] | RentGuard
+## EMAIL 4 — Miami-Specific Angle (Day 15)
+
+**Subject:** Something worth knowing if you do rentals in {{market}}, {{first_name}}
+**From:** Santiago [Last Name] | RentGuard
 
 ---
 
 Hey {{first_name}},
 
-Sharing something quick because I thought you'd find this relevant.
+Quick one — something specific to {{market}} that came up this week.
 
-Last week, a broker in Miami told us: *"I started mentioning RentGuard on every landlord call. My close rate on rentals went up because owners stopped overthinking the tenant."*
+Florida's eviction process, even with an uncontested case, averages **4–8 weeks and $1,500–3,000 in legal fees** for a landlord going it alone. If the tenant contests even one motion, you're looking at 3–6 months and $5,000+.
 
-That's the RentGuard effect. It's not just protection for the landlord — it's a sales tool for the agent.
+RentGuard covers all of that. The moment a tenant misses rent and doesn't cure within 10 days, we initiate the 3-Day Notice, retain the eviction attorney, and pay the landlord from our own funds — **within 7 business days**. The landlord doesn't call a lawyer, doesn't chase anyone, doesn't wait months.
 
-If this sounds like something worth 15 minutes of your time, I'd love to connect:
+That's a genuinely different value proposition than what a security deposit offers.
+
+If you have landlord clients in {{market}} who'd want to know about this, I'd love 15 minutes:
 
 → **[Calendly Link]**
 
-If not, no worries at all — I won't keep following up after this.
+If not, no worries — thanks for reading this far.
 
-[Your Name]
-RentGuard | Florida
+Santiago
+RentGuard
 
 ---
 
 ## EMAIL 5 — Last Touch (Day 22)
+
 **Subject:** Last note from me, {{first_name}}
-**From:** [Your Name] | RentGuard
+**From:** Santiago [Last Name] | RentGuard
 
 ---
 
 {{first_name}},
 
-I know your inbox is a warzone, so this is genuinely my last note.
+This is genuinely my last follow-up — I respect your inbox.
 
-If you ever work with a landlord who's nervous about a tenant — or wants to know their rent is guaranteed regardless of what happens — think of RentGuard.
+Leaving you with one thought: if you ever have a landlord client who's hesitating on a tenant — or who's nervous about what happens if the rent stops coming — RentGuard exists for exactly that moment.
 
-We're here, we're Florida-only right now, and we take care of everything so you don't have to.
+We're Miami-focused right now, decisions in 48 hours, and coverage starts the day the lease is signed.
 
-Grab 15 minutes anytime: **[Calendly Link]**
+If it's ever useful: **[Calendly Link]**
 
-Otherwise, I hope the {{market}} market continues to treat you well. It's a great time to be in Florida rentals.
+Otherwise, I hope {{market}} treats you well this season. It's a good time to be in Florida rentals.
 
-[Your Name]
-RentGuard
+Santiago
+RentGuard | rentguard.us.com
 
-P.S. If anyone on your team is closer to landlord rentals than you, I'd love an intro. Happy to return the favor any way I can.
+P.S. If someone on your team handles more of the landlord side than you do, I'd be grateful for a warm intro. Happy to return the favor.
 
 ---
 
 ## USAGE NOTES
 
-**Variables to personalize:**
-- `{{first_name}}` — Lead's first name
-- `{{market}}` — City (Miami, Orlando, Fort Lauderdale, Naples)
+### Personalization Variables
+| Variable | Example values |
+|----------|---------------|
+| `{{first_name}}` | Maria, Carlos, John |
+| `{{market}}` | Miami, Coral Gables, Brickell, Doral, Kendall, Miami Beach |
 
-**Scheduling:**
-- Email 1: Day 0 (initial send)
-- Email 2: Day 4 (if no reply)
-- Email 3: Day 9 (if no reply)
-- Email 4: Day 15 (if no reply)  
-- Email 5: Day 22 (if no reply — final)
-- If reply received at any point: pause sequence, route to sales rep
+### Scheduling
+| Email | When to send |
+|-------|-------------|
+| Email 1 | Day 0 — initial send |
+| Email 2 | Day 4 — if no reply |
+| Email 3 | Day 9 — if no reply |
+| Email 4 | Day 15 — if no reply |
+| Email 5 | Day 22 — final, if no reply |
+| Reply received | Pause sequence immediately, route to Santiago for live follow-up |
 
-**A/B Test Ideas:**
-- Subject line: try emoji vs. no emoji on Email 1
-- Email 2: try leading with commission $ amount vs. landlord benefit
-- Email 4: swap social proof quote with a concrete stat
+### Commission Calculator (for reference when talking to agents)
+| Monthly Rent | Annual Rent | GREEN fee (4%) | Agent commission (10%) |
+|-------------|------------|----------------|----------------------|
+| $1,500/mo | $18,000 | $720 | **$72** |
+| $2,000/mo | $24,000 | $960 | **$96** |
+| $2,500/mo | $30,000 | $1,200 | **$120** |
+| $3,500/mo | $42,000 | $1,680 | **$168** |
+| $5,000/mo | $60,000 | $2,400 | **$240** |
 
-**Calendly:** Set your link in the lead gen CSV and it auto-populates in the email templates.
+*YELLOW tier (6-8%) yields proportionally higher commissions.*
+
+### Sending Rules
+- **Google Workspace (Santiago's account):** Max 50-100 cold emails/day. Personalize at least first line per batch.
+- **Resend (campaign sequences):** Only after domain warmup complete (see `marketing/Email_Warmup_Plan.md`). Max 200/day in first 30 days.
+- **Bounce rate:** Keep below 2%. Clean the lead list before each campaign.
+- **Spam reports:** If >0.1% of recipients mark as spam, pause and review.
+
+### A/B Test Ideas
+- **Email 1 subject:** "Quick question, {{first_name}}" vs. "Referral program for {{market}} agents"
+- **Email 2:** Lead with commission $ amount vs. lead with landlord protection benefit
+- **Email 4:** Florida eviction stats angle vs. "landlord closes faster" angle
+- **Timing:** Morning (8–9am EST) vs. midday (12–1pm EST) — track open rates in Resend dashboard
+
+### Calendly Link Setup
+- Create a 15-minute slot: "RentGuard — Quick Intro"
+- Add to Santiago's Google Workspace calendar
+- Include in lead gen CSV so it auto-populates in Resend campaigns

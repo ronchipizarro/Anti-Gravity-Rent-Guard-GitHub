@@ -61,7 +61,59 @@ export function getDb() {
       FOREIGN KEY (lead_id) REFERENCES leads (id),
       FOREIGN KEY (campaign_id) REFERENCES campaigns (id)
     );
+
+    CREATE TABLE IF NOT EXISTS email_sequences (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      campaign_id INTEGER NOT NULL,
+      step_number INTEGER NOT NULL,
+      delay_days INTEGER NOT NULL,
+      subject_template TEXT NOT NULL,
+      body_template TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (campaign_id) REFERENCES campaigns (id)
+    );
+
+    CREATE TABLE IF NOT EXISTS outreach_batches (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      campaign_id INTEGER NOT NULL,
+      name TEXT,
+      status TEXT DEFAULT 'draft',
+      sequence_step INTEGER DEFAULT 1,
+      approved_at DATETIME,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (campaign_id) REFERENCES campaigns (id)
+    );
+
+    CREATE TABLE IF NOT EXISTS batch_leads (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      batch_id INTEGER NOT NULL,
+      lead_id INTEGER NOT NULL,
+      subject TEXT NOT NULL,
+      body TEXT NOT NULL,
+      status TEXT DEFAULT 'pending',
+      resend_id TEXT,
+      sent_at DATETIME,
+      FOREIGN KEY (batch_id) REFERENCES outreach_batches (id),
+      FOREIGN KEY (lead_id) REFERENCES leads (id)
+    );
   `);
+
+  // Migrations for new columns on existing tables
+  const campaignCols = db.prepare("PRAGMA table_info(campaigns)").all().map(c => c.name);
+  if (!campaignCols.includes('sender_name')) {
+    db.exec("ALTER TABLE campaigns ADD COLUMN sender_name TEXT");
+  }
+  if (!campaignCols.includes('sender_email')) {
+    db.exec("ALTER TABLE campaigns ADD COLUMN sender_email TEXT");
+  }
+
+  const leadCols = db.prepare("PRAGMA table_info(leads)").all().map(c => c.name);
+  if (!leadCols.includes('outreach_status')) {
+    db.exec("ALTER TABLE leads ADD COLUMN outreach_status TEXT DEFAULT NULL");
+  }
+  if (!leadCols.includes('current_sequence_step')) {
+    db.exec("ALTER TABLE leads ADD COLUMN current_sequence_step INTEGER DEFAULT 0");
+  }
 
   return db;
 }

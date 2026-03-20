@@ -3,7 +3,7 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { ShieldCheck, UserCheck, Zap, CreditCard, Sparkles, ArrowRight, CheckCircle } from 'lucide-react'
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.rentguard.us.com'
 
 
 export default function TenantsInfoPage() {

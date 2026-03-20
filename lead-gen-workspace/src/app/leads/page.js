@@ -88,7 +88,7 @@ export default function LeadsPage() {
 
   async function handleSendEmail(leadId) {
     if (!confirm('Are you sure you want to send the first sequence email to this lead?')) return;
-    
+
     setSendingEmail(leadId);
     try {
       const res = await fetch(`/api/leads/${leadId}/email`, {
@@ -99,7 +99,7 @@ export default function LeadsPage() {
       const data = await res.json();
       if (data.success) {
         alert('Email sent successfully!');
-        fetchLeads(); // Refresh leads to update pipeline_status
+        fetchLeads();
       } else {
         alert('Failed to send email: ' + data.error);
       }
@@ -110,24 +110,49 @@ export default function LeadsPage() {
     }
   }
 
+  async function handleMarkReplied(leadId) {
+    if (!confirm('Mark this lead as replied? This will stop any active email sequence.')) return;
+    try {
+      const res = await fetch(`/api/leads/${leadId}/outreach-status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ outreach_status: 'replied' }),
+      });
+      const data = await res.json();
+      if (data.success) fetchLeads();
+      else alert('Failed: ' + data.error);
+    } catch (err) {
+      alert('Error updating status');
+    }
+  }
+
   return (
     <div>
       <div className="page-header">
         <h1 className="page-title">Lead Management</h1>
         <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-          <input 
-            type="file" 
-            accept=".csv" 
-            ref={fileInputRef} 
-            onChange={handleFileUpload} 
-            style={{ display: 'none' }} 
+          <input
+            type="file"
+            accept=".csv"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            style={{ display: 'none' }}
           />
-          <button 
-            className="btn btn-primary" 
+          <button
+            className="btn btn-primary"
             disabled={importing}
             onClick={() => fileInputRef.current?.click()}
           >
             {importing ? 'Importing...' : 'Upload CSV'}
+          </button>
+          <button
+            className="btn"
+            onClick={() => {
+              const query = new URLSearchParams(filters).toString();
+              window.open('/api/leads/export?' + query, '_blank');
+            }}
+          >
+            Export CSV
           </button>
         </div>
       </div>
@@ -173,7 +198,8 @@ export default function LeadsPage() {
                   <th>Contact</th>
                   <th>Role</th>
                   <th>Location</th>
-                  <th>Status</th>
+                  <th>Pipeline</th>
+                  <th>Outreach</th>
                   <th>Campaign</th>
                   <th>Actions</th>
                 </tr>
@@ -196,17 +222,33 @@ export default function LeadsPage() {
                         {lead.pipeline_status}
                       </span>
                     </td>
+                    <td>
+                      {lead.outreach_status ? (
+                        <span className={`badge badge-${lead.outreach_status === 'replied' ? 'success' : lead.outreach_status === 'sequence_active' ? 'primary' : 'neutral'}`}>
+                          {lead.outreach_status}
+                        </span>
+                      ) : '-'}
+                    </td>
                     <td><span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{lead.campaign_name || '-'}</span></td>
                     <td style={{ display: 'flex', gap: 'var(--space-2)' }}>
                       <button className="btn" style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}>Edit</button>
-                      <button 
-                        className="btn btn-primary" 
+                      <button
+                        className="btn btn-primary"
                         style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
                         disabled={sendingEmail === lead.id || lead.pipeline_status === 'contacted'}
                         onClick={() => handleSendEmail(lead.id)}
                       >
                         {sendingEmail === lead.id ? 'Sending...' : lead.pipeline_status === 'contacted' ? 'Sent' : 'Email'}
                       </button>
+                      {lead.outreach_status === 'sequence_active' && (
+                        <button
+                          className="btn"
+                          style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                          onClick={() => handleMarkReplied(lead.id)}
+                        >
+                          Mark Replied
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}

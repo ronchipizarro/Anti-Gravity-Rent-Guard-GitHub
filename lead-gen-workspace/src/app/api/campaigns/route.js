@@ -10,12 +10,12 @@ export async function GET() {
 export async function POST(req) {
   const db = getDb();
   const body = await req.json();
-  const { name, geography, company_type, icp_notes, target_roles, language } = body;
-  
+  const { name, geography, company_type, icp_notes, target_roles, language, sender_name, sender_email, sequence_length, batch_size } = body;
+
   const result = db.prepare(`
-    INSERT INTO campaigns (name, geography, company_type, icp_notes, target_roles, language, status)
-    VALUES (?, ?, ?, ?, ?, ?, 'draft')
-  `).run(name, geography, company_type, icp_notes, target_roles, language);
+    INSERT INTO campaigns (name, geography, company_type, icp_notes, target_roles, language, sender_name, sender_email, sequence_length, batch_size, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft')
+  `).run(name, geography, company_type, icp_notes, target_roles, language, sender_name || null, sender_email || null, sequence_length || 5, batch_size || 50);
 
   return NextResponse.json({ success: true, id: result.lastInsertRowid });
 }
