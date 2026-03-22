@@ -14,12 +14,20 @@ export default function AppNavbar() {
                     </div>
                     <span className="font-semibold text-white tracking-tight text-[15px]">RentGuard</span>
                 </Link>
-                <a
-                    href={MARKETING_URL}
-                    className="text-xs text-gray-500 hover:text-white transition-colors flex items-center gap-1"
-                >
-                    &larr; Back to RentGuard.com
-                </a>
+                <div className="flex items-center gap-4">
+                    <Link
+                        href="/broker/login"
+                        className="text-xs text-gray-400 hover:text-white transition-colors font-medium px-3 py-1.5 rounded-lg hover:bg-white/8"
+                    >
+                        Broker Portal
+                    </Link>
+                    <a
+                        href={MARKETING_URL}
+                        className="text-xs text-gray-500 hover:text-white transition-colors flex items-center gap-1"
+                    >
+                        &larr; Back to RentGuard
+                    </a>
+                </div>
             </nav>
         </header>
     )

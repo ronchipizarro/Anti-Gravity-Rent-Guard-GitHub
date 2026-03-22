@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import { Menu, X } from 'lucide-react'
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.rentguard.us.com'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://app.rentguard.us.com'
 
 const navLinks = [
     { label: 'For Landlords', href: '/landlords' },
@@ -55,6 +55,9 @@ export default function Navbar() {
 
                 {/* CTA Buttons */}
                 <div className="hidden md:flex items-center gap-3">
+                    <a href={`${APP_URL}/broker/login`} className="text-sm text-gray-300 hover:text-white transition-colors duration-200 font-medium">
+                        Broker Portal
+                    </a>
                     <a href={`${APP_URL}/apply/tenant`} className="text-sm text-gray-300 hover:text-white transition-colors duration-200 font-medium">
                         Tenant Apply
                     </a>
@@ -90,6 +93,9 @@ export default function Navbar() {
                         </Link>
                     ))}
                     <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-white/8">
+                        <a href={`${APP_URL}/broker/login`} onClick={() => setMenuOpen(false)} className="btn-secondary text-center">
+                            Broker Portal
+                        </a>
                         <a href={`${APP_URL}/apply/tenant`} onClick={() => setMenuOpen(false)} className="btn-secondary text-center">
                             Tenant Apply
                         </a>

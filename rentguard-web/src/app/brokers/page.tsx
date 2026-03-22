@@ -30,9 +30,14 @@ export default function BrokersPage() {
                             <p className="text-gray-400 text-lg max-w-xl leading-relaxed mb-8">
                                 Introduce your landlord clients to RentGuard. They get 12 months of coverage, and you earn a referral fee per deal.
                             </p>
-                            <Link href={`${APP_URL}/apply/owner`} className="btn-primary gap-2">
-                                Start Onboarding a Client <ArrowRight size={14} />
-                            </Link>
+                            <div className="flex flex-wrap gap-3">
+                                <Link href={`${APP_URL}/broker/register`} className="btn-primary gap-2">
+                                    Create Broker Account <ArrowRight size={14} />
+                                </Link>
+                                <Link href={`${APP_URL}/apply/owner`} className="btn-secondary gap-2">
+                                    Onboard a Client
+                                </Link>
+                            </div>
                         </div>
                     </div>
 
@@ -89,7 +94,7 @@ export default function BrokersPage() {
                     <div className="text-center pt-12 border-t border-white/8">
                         <h2 className="text-2xl font-bold text-white mb-4">Ready to offer RentGuard?</h2>
                         <div className="flex justify-center gap-4">
-                            <Link href={`${APP_URL}/apply/owner`} className="btn-primary">Get Started</Link>
+                            <Link href={`${APP_URL}/broker/register`} className="btn-primary">Create Broker Account</Link>
                             <Link href="/#faq" className="btn-secondary">View FAQ</Link>
                         </div>
                     </div>

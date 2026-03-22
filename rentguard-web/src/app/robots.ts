@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://rentguard.com/sitemap.xml',
+    sitemap: 'https://rentguard.us.com/sitemap.xml',
   }
 }

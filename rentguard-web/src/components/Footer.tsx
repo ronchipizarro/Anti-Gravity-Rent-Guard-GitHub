@@ -45,6 +45,7 @@ export default function Footer() {
                             {[
                                 { label: 'Owner Application', href: `${APP_URL}/apply/owner` },
                                 { label: 'Tenant Application', href: `${APP_URL}/apply/tenant` },
+                                { label: 'Broker Portal', href: `${APP_URL}/broker/login` },
                             ].map((item) => (
                                 <li key={item.href}>
                                     <Link href={item.href} className="text-sm text-gray-500 hover:text-white transition-colors">
